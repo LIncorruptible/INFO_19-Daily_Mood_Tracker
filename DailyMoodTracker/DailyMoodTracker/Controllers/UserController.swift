@@ -5,7 +5,6 @@
 //  Created by etudiant on 29/12/2024.
 //
 
-
 import Foundation
 import SwiftData
 

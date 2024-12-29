@@ -1,3 +1,8 @@
+//
+//  DashboardView.swift
+//  DailyMoodTracker
+//
+
 import SwiftUI
 import SwiftData
 
@@ -6,11 +11,24 @@ struct DashboardView: View {
     @Query var quotes: [Quote]
     @Query var activities: [Activity]
     
+    @ObservedObject private var userSession = UserSession.shared
+    @Environment(\.dismiss) private var dismiss
     @State private var randomQuote: Quote?
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
+                // Nom d'utilisateur en haut de la vue
+                HStack {
+                    Text("Bienvenue, \(userSession.currentUser?.username ?? "Utilisateur")!")
+                        .font(.title2)
+                        .bold()
+                        .padding(.leading)
+                    
+                    Spacer()
+                }
+                .padding(.top)
+                
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         
@@ -91,7 +109,6 @@ struct DashboardView: View {
                     .padding()
                 } // Fin du ScrollView
                 
-                // Force la barre de navigation en bas
                 Spacer()
                 
                 // MARK: - Barre de navigation en bas
@@ -112,6 +129,18 @@ struct DashboardView: View {
                 .padding()
             } // Fin du VStack
             .navigationTitle("Tableau de bord")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        userSession.logout()
+                        dismiss() // Redirige vers l'écran de connexion
+                    }) {
+                        Text("Déconnexion")
+                            .foregroundColor(.red)
+                    }
+                }
+            }
             .onAppear {
                 randomQuote = quotes.randomElement()
             }
