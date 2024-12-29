@@ -25,25 +25,49 @@ struct DailyMoodTrackerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    importQuotesIfNeeded()
+                    importActivitiesIfNeeded()
+                }
         }
         .modelContainer(sharedModelContainer)
-        .onAppear {
-            importQuotesIfNeeded()
-            importActivitiesIfNeeded()
-        }
     }
 
     private func importQuotesIfNeeded() {
         let context = sharedModelContainer.mainContext
-        if context.fetch(Quote.self).isEmpty {
-            QuoteImporter.importQuotes(from: "citations", context: context)
+
+        // Créez un FetchDescriptor pour le type Quote
+        let fetchDescriptor = FetchDescriptor<Quote>()
+
+        do {
+            // On récupère le tableau d’objets de type Quote
+            let quotes = try context.fetch(fetchDescriptor)
+
+            if quotes.isEmpty {
+                // S’il n’y en a aucun, on importe
+                QuoteImporter.importQuotes(from: "citations", context: context)
+            }
+
+        } catch {
+            print("Erreur lors de la récupération des citations : (error)")
         }
     }
 
     private func importActivitiesIfNeeded() {
         let context = sharedModelContainer.mainContext
-        if context.fetch(Activity.self).isEmpty {
-            ActivityImporter.importActivities(from: "activities", context: context)
+
+        // Pareil pour Activity
+        let fetchDescriptor = FetchDescriptor<Activity>()
+
+        do {
+            let activities = try context.fetch(fetchDescriptor)
+
+            if activities.isEmpty {
+                ActivityImporter.importActivities(from: "activities", context: context)
+            }
+
+        } catch {
+            print("Erreur lors de la récupération des activités : (error)")
         }
     }
 }
