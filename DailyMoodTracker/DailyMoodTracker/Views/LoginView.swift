@@ -13,6 +13,7 @@ struct LoginView: View {
     @State private var password = ""
     @State private var errorMessage: String?
     @State private var isLoginSuccessful = false
+    @State private var navigateToDashboard = false // État pour gérer la redirection
 
     private let loginController = LoginController()
 
@@ -35,16 +36,21 @@ struct LoginView: View {
                     handleLogin()
                 }
                 .disabled(email.isEmpty || password.isEmpty)
-                
+
                 Section {
                     NavigationLink("Créer un compte", destination: SignUpView())
                         .foregroundColor(.blue)
                 }
             }
             .navigationTitle("Connexion")
-            .navigationBarBackButtonHidden(true) // Supprime le bouton "Retour"
+            .navigationBarBackButtonHidden(true)
+            .navigationDestination(isPresented: $navigateToDashboard) {
+                DashboardView() // Redirection vers DashboardView
+            }
             .alert("Succès", isPresented: $isLoginSuccessful) {
-                Button("OK", role: .cancel) {}
+                Button("OK") {
+                    navigateToDashboard = true // Déclenche la redirection après confirmation
+                }
             } message: {
                 Text("Connexion réussie !")
             }
