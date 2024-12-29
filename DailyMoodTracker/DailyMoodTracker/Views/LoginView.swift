@@ -5,7 +5,6 @@
 //  Created by etudiant on 29/12/2024.
 //
 
-
 import SwiftUI
 
 struct LoginView: View {
@@ -18,7 +17,7 @@ struct LoginView: View {
     private let loginController = LoginController()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("Connexion")) {
                     TextField("Email", text: $email)
@@ -43,6 +42,7 @@ struct LoginView: View {
                 }
             }
             .navigationTitle("Connexion")
+            .navigationBarBackButtonHidden(true) // Supprime le bouton "Retour"
             .alert("Succès", isPresented: $isLoginSuccessful) {
                 Button("OK", role: .cancel) {}
             } message: {

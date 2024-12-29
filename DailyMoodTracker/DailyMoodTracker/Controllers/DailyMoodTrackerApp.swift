@@ -24,13 +24,12 @@ struct DailyMoodTrackerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView()
+                .modelContainer(sharedModelContainer)
                 .onAppear {
-                    importQuotesIfNeeded()
-                    importActivitiesIfNeeded()
+                    printAllUsers()
                 }
         }
-        .modelContainer(sharedModelContainer)
     }
 
     private func importQuotesIfNeeded() {
@@ -68,6 +67,38 @@ struct DailyMoodTrackerApp: App {
 
         } catch {
             print("Erreur lors de la récupération des activités : (error)")
+        }
+    }
+    
+    // MARK: - Fonctions débogage BDD
+    
+    func printDatabaseLocation() {
+        let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+        if let appSupportPath = paths.first {
+            print("Le fichier de la base de données se trouve ici : \(appSupportPath.path)")
+        }
+    }
+    
+    private func printAllUsers() {
+        print("Liste des utilisateurs :")
+        let userController = UserController()
+        do {
+            let users = try userController.getAllUsers(context: sharedModelContainer.mainContext)
+            for user in users {
+                print(user.email, " - ",  user.dateCreated, " - " + user.password)
+            }
+        } catch {
+            print("Erreur lors de la récupération de tous les utilisateurs : \(error.localizedDescription)")
+        }
+    }
+    
+    private func deleteAllUsers() {
+        print("Suppression de tous les utilisateurs...")
+        let userController = UserController()
+        do {
+            try userController.deleteAllUsers(context: sharedModelContainer.mainContext)
+        } catch {
+            print("Erreur lors de la suppression de tous les utilisateurs : \(error.localizedDescription)")
         }
     }
 }

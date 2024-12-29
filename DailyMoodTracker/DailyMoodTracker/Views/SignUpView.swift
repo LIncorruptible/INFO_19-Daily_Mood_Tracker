@@ -5,7 +5,6 @@
 //  Created by etudiant on 29/12/2024.
 //
 
-
 import SwiftUI
 
 struct SignUpView: View {
@@ -15,15 +14,17 @@ struct SignUpView: View {
     @State private var password = ""
     @State private var confirmPassword = ""
     @State private var errorMessage: String?
-    @State private var isSignUpSuccessful = false
+    @State private var showSuccessAlert = false // Nouveau état pour afficher l'alerte
+    @State private var navigateToLogin = false // Gère la navigation vers LoginView
 
     private let signUpController = SignUpController()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("Créer un compte")) {
                     TextField("Nom d'utilisateur", text: $username)
+                        .autocapitalization(.none)
                     TextField("Email", text: $email)
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)
@@ -42,10 +43,15 @@ struct SignUpView: View {
                 .disabled(username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty)
             }
             .navigationTitle("Inscription")
-            .alert("Succès", isPresented: $isSignUpSuccessful) {
-                Button("OK", role: .cancel) {}
+            .navigationDestination(isPresented: $navigateToLogin) {
+                LoginView() // Redirige vers LoginView
+            }
+            .alert("Succès", isPresented: $showSuccessAlert) { // Configuration de l'alerte
+                Button("OK") {
+                    navigateToLogin = true // Redirige vers LoginView après la confirmation
+                }
             } message: {
-                Text("Inscription réussie ! Vous pouvez maintenant vous connecter.")
+                Text("Votre compte a été créé avec succès.")
             }
         }
     }
@@ -59,7 +65,7 @@ struct SignUpView: View {
                 confirmPassword: confirmPassword,
                 context: context
             )
-            isSignUpSuccessful = true
+            showSuccessAlert = true // Affiche l'alerte de succès
             clearFields()
         } catch let error as SignUpError {
             errorMessage = error.localizedDescription
