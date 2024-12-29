@@ -11,13 +11,13 @@ import SwiftData
 
 struct ActivityData: Codable {
     let id: Int
-    let titreFR: String
-    let titreEN: String
-    let texteFR: String
-    let texteEN: String
-    let tempsRealisation: Int16
-    let niveauHumeurMin: Int16
-    let niveauHumeurMax: Int16
+    let frenchTitle: String
+    let englishTitle: String
+    let frenchText: String
+    let englishText: String
+    let completionTimes: Int16
+    let moodLevelMin: Int16
+    let moodLevelMax: Int16
 }
 
 class ActivityImporter {
@@ -35,13 +35,13 @@ class ActivityImporter {
             for activityData in activitiesArray {
                 let newActivity = Activity(
                     id: activityData.id,
-                    frenchTitle: activityData.titreFR,
-                    englishTitle: activityData.titreEN,
-                    frenchText: activityData.texteFR,
-                    englishText: activityData.texteEN,
-                    duration: activityData.tempsRealisation,
-                    minMoodLevel: activityData.niveauHumeurMin,
-                    maxMoodLevel: activityData.niveauHumeurMax
+                    frenchTitle: activityData.frenchTitle,
+                    englishTitle: activityData.englishTitle,
+                    frenchText: activityData.frenchText,
+                    englishText: activityData.englishText,
+                    duration: activityData.completionTimes,
+                    minMoodLevel: activityData.moodLevelMin,
+                    maxMoodLevel: activityData.moodLevelMax
                 )
                 context.insert(newActivity)
             }
