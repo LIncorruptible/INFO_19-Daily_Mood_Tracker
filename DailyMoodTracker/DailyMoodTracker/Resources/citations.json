@@ -1,0 +1,802 @@
+[
+    {
+        "id": 1,
+        "titre": "Motivation",
+        "texte": "La vie est une fleur dont l’amour est le miel.",
+        "auteur": "Victor Hugo",
+        "fr": "La vie est une fleur dont l’amour est le miel.",
+        "en": "Life is a flower of which love is the honey."
+    },
+    {
+        "id": 2,
+        "titre": "Motivation",
+        "texte": "Le pessimiste voit la difficulté dans chaque opportunité. L’optimiste voit l’opportunité dans chaque difficulté.",
+        "auteur": "Winston Churchill",
+        "fr": "Le pessimiste voit la difficulté dans chaque opportunité. L’optimiste voit l’opportunité dans chaque difficulté.",
+        "en": "The pessimist sees difficulty in every opportunity. The optimist sees opportunity in every difficulty."
+    },
+    {
+        "id": 3,
+        "titre": "Motivation",
+        "texte": "Le bonheur ne dépend pas de ce que vous avez ou de qui vous êtes. Il repose uniquement sur ce que vous pensez.",
+        "auteur": "Dale Carnegie",
+        "fr": "Le bonheur ne dépend pas de ce que vous avez ou de qui vous êtes. Il repose uniquement sur ce que vous pensez.",
+        "en": "Happiness does not depend on what you have or who you are. It solely depends on what you think."
+    },
+    {
+        "id": 4,
+        "titre": "Motivation",
+        "texte": "La plus grande gloire n’est pas de ne jamais tomber, mais de se lever à chaque chute.",
+        "auteur": "Confucius",
+        "fr": "La plus grande gloire n’est pas de ne jamais tomber, mais de se lever à chaque chute.",
+        "en": "The greatest glory is not in never falling, but in rising every time we fall."
+    },
+    {
+        "id": 5,
+        "titre": "Motivation",
+        "texte": "Le succès, c’est d’aller d’échec en échec sans perdre son enthousiasme.",
+        "auteur": "Winston Churchill",
+        "fr": "Le succès, c’est d’aller d’échec en échec sans perdre son enthousiasme.",
+        "en": "Success is going from failure to failure without losing enthusiasm."
+    },
+    {
+        "id": 6,
+        "titre": "Motivation",
+        "texte": "L’optimisme est la foi qui mène à la réalisation.",
+        "auteur": "Helen Keller",
+        "fr": "L’optimisme est la foi qui mène à la réalisation.",
+        "en": "L’optimisme est la foi qui mène à la réalisation."
+    },
+    {
+        "id": 7,
+        "titre": "Motivation",
+        "texte": "Le bonheur n’est pas quelque chose de tout prêt. Il vient de vos propres actions.",
+        "auteur": "Dalaï Lama",
+        "fr": "Le bonheur n’est pas quelque chose de tout prêt. Il vient de vos propres actions.",
+        "en": "Le bonheur n’est pas quelque chose de tout prêt. Il vient de vos propres actions."
+    },
+    {
+        "id": 8,
+        "titre": "Motivation",
+        "texte": "Le bonheur est un état d'esprit, une façon de penser.",
+        "auteur": "Roy T. Bennett",
+        "fr": "Le bonheur est un état d'esprit, une façon de penser.",
+        "en": "Le bonheur est un état d'esprit, une façon de penser."
+    },
+    {
+        "id": 9,
+        "titre": "Motivation",
+        "texte": "La confiance en soi est le premier secret du succès.",
+        "auteur": "Ralph Waldo Emerson",
+        "fr": "La confiance en soi est le premier secret du succès.",
+        "en": "La confiance en soi est le premier secret du succès."
+    },
+    {
+        "id": 10,
+        "titre": "Motivation",
+        "texte": "Le bonheur, c’est lorsque vos actes sont en accord avec vos paroles.",
+        "auteur": "Indira Gandhi",
+        "fr": "Le bonheur, c’est lorsque vos actes sont en accord avec vos paroles.",
+        "en": "Le bonheur, c’est lorsque vos actes sont en accord avec vos paroles."
+    },
+    {
+        "id": 11,
+        "titre": "Motivation",
+        "texte": "Le bonheur n’est pas une destination, mais une façon de voyager.",
+        "auteur": "Margaret Lee Runbeck",
+        "fr": "Le bonheur n’est pas une destination, mais une façon de voyager.",
+        "en": "Le bonheur n’est pas une destination, mais une façon de voyager."
+    },
+    {
+        "id": 12,
+        "titre": "Motivation",
+        "texte": "Le bonheur est parfois caché dans l’inconnu.",
+        "auteur": "Victor Hugo",
+        "fr": "Le bonheur est parfois caché dans l’inconnu.",
+        "en": "Le bonheur est parfois caché dans l’inconnu."
+    },
+    {
+        "id": 13,
+        "titre": "Motivation",
+        "texte": "Le bonheur est une petite chose que l’on grignote, assis par terre, au soleil.",
+        "auteur": "Jean Giraudoux",
+        "fr": "Le bonheur est une petite chose que l’on grignote, assis par terre, au soleil.",
+        "en": "Le bonheur est une petite chose que l’on grignote, assis par terre, au soleil."
+    },
+    {
+        "id": 14,
+        "titre": "Motivation",
+        "texte": "Le bonheur, c’est de savoir ce que l’on veut et le vouloir passionnément.",
+        "auteur": "Fiodor Dostoïevski",
+        "fr": "Le bonheur, c’est de savoir ce que l’on veut et le vouloir passionnément.",
+        "en": "Le bonheur, c’est de savoir ce que l’on veut et le vouloir passionnément."
+    },
+    {
+        "id": 15,
+        "titre": "Motivation",
+        "texte": "Le bonheur est une sorte d’archipel composé d’instants heureux.",
+        "auteur": "Boris Cyrulnik",
+        "fr": "Le bonheur est une sorte d’archipel composé d’instants heureux.",
+        "en": "Le bonheur est une sorte d’archipel composé d’instants heureux."
+    },
+    {
+        "id": 16,
+        "titre": "Motivation",
+        "texte": "Le bonheur, c’est de continuer à désirer ce que l’on possède.",
+        "auteur": "Saint Augustin",
+        "fr": "Le bonheur, c’est de continuer à désirer ce que l’on possède.",
+        "en": "Le bonheur, c’est de continuer à désirer ce que l’on possède."
+    },
+    {
+        "id": 17,
+        "titre": "Motivation",
+        "texte": "La mélancolie est le plaisir d’être triste.",
+        "auteur": "Victor Hugo",
+        "fr": "La mélancolie est le plaisir d’être triste.",
+        "en": "La mélancolie est le plaisir d’être triste."
+    },
+    {
+        "id": 18,
+        "titre": "Motivation",
+        "texte": "L’optimisme est une forme de courage qui donne confiance aux autres et mène au succès.",
+        "auteur": "Baden-Powell",
+        "fr": "L’optimisme est une forme de courage qui donne confiance aux autres et mène au succès.",
+        "en": "L’optimisme est une forme de courage qui donne confiance aux autres et mène au succès."
+    },
+    {
+        "id": 19,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Maya Angelou",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 20,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Confucius",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 21,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Confucius",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 22,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Confucius",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 23,
+        "titre": "Motivation",
+        "texte": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "auteur": "Maya Angelou",
+        "fr": "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+        "en": "Success is not final, failure is not fatal: It is the courage to continue that counts."
+    },
+    {
+        "id": 24,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Mark Twain",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 25,
+        "titre": "Motivation",
+        "texte": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "auteur": "Confucius",
+        "fr": "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+        "en": "Success is not final, failure is not fatal: It is the courage to continue that counts."
+    },
+    {
+        "id": 26,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Maya Angelou",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 27,
+        "titre": "Motivation",
+        "texte": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "auteur": "Mark Twain",
+        "fr": "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+        "en": "Success is not final, failure is not fatal: It is the courage to continue that counts."
+    },
+    {
+        "id": 28,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Maya Angelou",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 29,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Albert Einstein",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 30,
+        "titre": "Motivation",
+        "texte": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "auteur": "Steve Jobs",
+        "fr": "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+        "en": "Success is not final, failure is not fatal: It is the courage to continue that counts."
+    },
+    {
+        "id": 31,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Steve Jobs",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 32,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Mark Twain",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 33,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Mark Twain",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 34,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Confucius",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 35,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Steve Jobs",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 36,
+        "titre": "Motivation",
+        "texte": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "auteur": "Maya Angelou",
+        "fr": "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+        "en": "Success is not final, failure is not fatal: It is the courage to continue that counts."
+    },
+    {
+        "id": 37,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Confucius",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 38,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Confucius",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 39,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Steve Jobs",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 40,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Mark Twain",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 41,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Mark Twain",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 42,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Albert Einstein",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 43,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Mark Twain",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 44,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Mark Twain",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 45,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Confucius",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 46,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Maya Angelou",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 47,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Maya Angelou",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 48,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Steve Jobs",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 49,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Steve Jobs",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 50,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Steve Jobs",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 51,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Albert Einstein",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 52,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Albert Einstein",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 53,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Confucius",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 54,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Maya Angelou",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 55,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Albert Einstein",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 56,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Steve Jobs",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 57,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Mark Twain",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 58,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Confucius",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 59,
+        "titre": "Motivation",
+        "texte": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "auteur": "Mark Twain",
+        "fr": "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+        "en": "Success is not final, failure is not fatal: It is the courage to continue that counts."
+    },
+    {
+        "id": 60,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Mark Twain",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 61,
+        "titre": "Motivation",
+        "texte": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "auteur": "Mark Twain",
+        "fr": "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+        "en": "Success is not final, failure is not fatal: It is the courage to continue that counts."
+    },
+    {
+        "id": 62,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Albert Einstein",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 63,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Confucius",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 64,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Confucius",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 65,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Steve Jobs",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 66,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Steve Jobs",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 67,
+        "titre": "Motivation",
+        "texte": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "auteur": "Steve Jobs",
+        "fr": "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+        "en": "Success is not final, failure is not fatal: It is the courage to continue that counts."
+    },
+    {
+        "id": 68,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Confucius",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 69,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Confucius",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 70,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Maya Angelou",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 71,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Confucius",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 72,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Confucius",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 73,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Mark Twain",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 74,
+        "titre": "Motivation",
+        "texte": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "auteur": "Albert Einstein",
+        "fr": "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+        "en": "Success is not final, failure is not fatal: It is the courage to continue that counts."
+    },
+    {
+        "id": 75,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Mark Twain",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 76,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Albert Einstein",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 77,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Confucius",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 78,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Steve Jobs",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 79,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Confucius",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 80,
+        "titre": "Motivation",
+        "texte": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "auteur": "Steve Jobs",
+        "fr": "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+        "en": "Success is not final, failure is not fatal: It is the courage to continue that counts."
+    },
+    {
+        "id": 81,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Steve Jobs",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 82,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Confucius",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 83,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Maya Angelou",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 84,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Albert Einstein",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 85,
+        "titre": "Motivation",
+        "texte": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "auteur": "Maya Angelou",
+        "fr": "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+        "en": "Success is not final, failure is not fatal: It is the courage to continue that counts."
+    },
+    {
+        "id": 86,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Confucius",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 87,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Steve Jobs",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 88,
+        "titre": "Motivation",
+        "texte": "Do what you can, with what you have, where you are.",
+        "auteur": "Confucius",
+        "fr": "Faites ce que vous pouvez, avec ce que vous avez, là où vous êtes.",
+        "en": "Do what you can, with what you have, where you are."
+    },
+    {
+        "id": 89,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Mark Twain",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 90,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Mark Twain",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 91,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Confucius",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 92,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Steve Jobs",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 93,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Maya Angelou",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 94,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Mark Twain",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    },
+    {
+        "id": 95,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Albert Einstein",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 96,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Mark Twain",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 97,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Mark Twain",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 98,
+        "titre": "Motivation",
+        "texte": "The only limit to our realization of tomorrow is our doubts of today.",
+        "auteur": "Steve Jobs",
+        "fr": "La seule limite à notre réalisation de demain est nos doutes d'aujourd'hui.",
+        "en": "The only limit to our realization of tomorrow is our doubts of today."
+    },
+    {
+        "id": 99,
+        "titre": "Motivation",
+        "texte": "Act as if what you do makes a difference. It does.",
+        "auteur": "Albert Einstein",
+        "fr": "Agissez comme si ce que vous faisiez faisait une différence. Ça le fait.",
+        "en": "Act as if what you do makes a difference. It does."
+    },
+    {
+        "id": 100,
+        "titre": "Motivation",
+        "texte": "Believe you can and you're halfway there.",
+        "auteur": "Steve Jobs",
+        "fr": "Croyez que vous pouvez et vous êtes à mi-chemin.",
+        "en": "Believe you can and you're halfway there."
+    }
+]
