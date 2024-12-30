@@ -3,6 +3,7 @@ import SwiftData
 
 @main
 struct DailyMoodTrackerApp: App {
+    @ObservedObject private var userSession = UserSession.shared
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -17,11 +18,15 @@ struct DailyMoodTrackerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LoginView()
-                .modelContainer(sharedModelContainer)
-                .onAppear {
-                    printAllUsers()
-                }
+            if userSession.isLoggedIn {
+                DashboardView() // Redirige vers DashboardView si l'utilisateur est connecté
+            } else {
+                LoginView() // Sinon, redirige vers LoginView
+                    .modelContainer(sharedModelContainer)
+                    .onAppear {
+                        printAllUsers()
+                    }
+            }
         }
     }
 
