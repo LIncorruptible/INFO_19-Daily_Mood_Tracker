@@ -5,33 +5,35 @@
 //  Created by etudiant on 30/12/2024.
 //
 
-
 import SwiftUI
 
 struct DefaultMoodsView: View {
     let moods: [Mood]
 
     var body: some View {
-        Text("Humeurs de base")
-            .font(.headline)
-        
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 16) {
-                // Première ligne
-                HStack(spacing: 16) {
-                    ForEach(moods[0..<3], id: \.id) { mood in
-                        moodCard(mood)
+        VStack {
+            Text("Humeurs de base")
+                .font(.headline)
+                .padding(.bottom, 16)
+
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 16) {
+                    // Première ligne
+                    HStack(spacing: 16) {
+                        ForEach(moods[0..<3], id: \.id) { mood in
+                            moodCard(mood)
+                        }
+                    }
+                    // Deuxième ligne
+                    HStack(spacing: 16) {
+                        ForEach(moods[3..<5], id: \.id) { mood in
+                            moodCard(mood)
+                        }
                     }
                 }
-                // Deuxième ligne
-                HStack(spacing: 16) {
-                    ForEach(moods[3..<5], id: \.id) { mood in
-                        moodCard(mood)
-                    }
-                }
+                .padding(.horizontal)
+                .padding(.bottom, 10)
             }
-            .padding(.horizontal)
-            .padding(.bottom, 10)
         }
     }
 
@@ -47,13 +49,13 @@ struct DefaultMoodsView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50)
+                    .foregroundColor(.gray)
             }
             Text(mood.name)
                 .font(.caption)
+                .foregroundColor(.primary)
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
-        .background(Color(UIColor.secondarySystemBackground))
-        .cornerRadius(8)
     }
 }
