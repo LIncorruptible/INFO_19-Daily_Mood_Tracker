@@ -37,6 +37,10 @@ struct MoodsView: View {
     @State private var formSelectedItem: PhotosPickerItem? = nil
     @State private var formImageData: Data? = nil
 
+    // Gestion des erreurs
+    @State private var nameError: String? = nil
+    @State private var descriptionError: String? = nil
+
     var body: some View {
         NavigationView {
             VStack {
@@ -179,14 +183,32 @@ struct MoodsView: View {
                         .onChange(of: formName) { newValue in
                             if newValue.count > 20 {
                                 formName = String(newValue.prefix(20))
+                                nameError = "Le nom ne peut pas dépasser 20 caractères."
+                            } else {
+                                nameError = nil
                             }
                         }
+                    if let nameError = nameError {
+                        Text(nameError)
+                            .font(.footnote)
+                            .foregroundColor(.red)
+                    }
+                    
                     TextField("Description", text: $formDescription)
                         .onChange(of: formDescription) { newValue in
                             if newValue.count > 35 {
                                 formDescription = String(newValue.prefix(35))
+                                descriptionError = "La description ne peut pas dépasser 35 caractères."
+                            } else {
+                                descriptionError = nil
                             }
                         }
+                    if let descriptionError = descriptionError {
+                        Text(descriptionError)
+                            .font(.footnote)
+                            .foregroundColor(.red)
+                    }
+                    
                     Section {
                         Stepper(value: $formLevel, in: 0...10) {
                             Text("Niveau : \(formLevel)")
@@ -226,7 +248,12 @@ struct MoodsView: View {
                     Button("Annuler") { showForm = false }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Enregistrer") { performSave(); showForm = false }
+                    Button("Enregistrer") {
+                        if validateForm() {
+                            performSave()
+                            showForm = false
+                        }
+                    }
                 }
             }
         }
@@ -277,5 +304,18 @@ struct MoodsView: View {
             mood.userImageData = formImageData
             try? context.save()
         }
+    }
+
+    private func validateForm() -> Bool {
+        var isValid = true
+        if formName.trimmingCharacters(in: .whitespaces).isEmpty {
+            nameError = "Le nom est obligatoire."
+            isValid = false
+        }
+        if formLevel < 1 {
+            nameError = "Le niveau doit être au moins 1."
+            isValid = false
+        }
+        return isValid
     }
 }
