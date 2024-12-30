@@ -134,7 +134,6 @@ struct DashboardView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         userSession.logout()
-                        dismiss() // Redirige vers l'écran de connexion
                     }) {
                         Text("Déconnexion")
                             .foregroundColor(.red)
