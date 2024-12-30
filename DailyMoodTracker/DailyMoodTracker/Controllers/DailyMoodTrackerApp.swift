@@ -20,14 +20,18 @@ struct DailyMoodTrackerApp: App {
         WindowGroup {
             if userSession.isLoggedIn {
                 DashboardView() // Redirige vers DashboardView si l'utilisateur est connecté
+                .onAppear {
+                            importQuotesIfNeeded()
+                            importActivitiesIfNeeded()
+                        }
             } else {
                 LoginView() // Sinon, redirige vers LoginView
-                    .modelContainer(sharedModelContainer)
                     .onAppear {
                         printAllUsers()
                     }
             }
         }
+        .modelContainer(sharedModelContainer)
     }
 
     private func importQuotesIfNeeded() {

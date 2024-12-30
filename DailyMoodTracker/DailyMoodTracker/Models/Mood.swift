@@ -13,15 +13,28 @@ import SwiftData
 class Mood {
     @Attribute(.unique) var id: UUID
     var name: String
-    var text : String
-    var image: String
+    var text: String
     var level: Int16
+    
+    // Image optionnelle (nom d'asset), peut être nil
+    var image: String?
+    
+    // Données binaires si l’utilisateur a importé une photo
+    var userImageData: Data?
 
-    init(id: UUID = UUID(), name: String, text: String, image: String, level: Int16) {
+    init(
+        id: UUID = UUID(),
+        name: String,
+        text: String,
+        level: Int16,
+        image: String? = nil,
+        userImageData: Data? = nil
+    ) {
         self.id = id
         self.name = name
         self.text = text
-        self.image = image
         self.level = level
+        self.image = image
+        self.userImageData = userImageData
     }
 }
