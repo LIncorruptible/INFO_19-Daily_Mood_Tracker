@@ -89,8 +89,13 @@ class MoodController: ObservableObject {
     // MARK: - create
     // Création d'une nouvelle humeur
     func create(mood: Mood) throws {
+
         guard !isDefaultMood(mood) else {
             throw MoodError.saveFailed("Impossible de créer une humeur par défaut.")
+        }
+        
+        guard !alreadyExists(name: mood.name) else {
+            throw MoodError.alreadyExists("Une humeur avec le nom \(mood.name) existe déjà.")
         }
         
         context.insert(mood)
@@ -110,7 +115,11 @@ class MoodController: ObservableObject {
         }
         
         guard !isDefaultMood(moodToUpdate) else {
-            throw MoodError.saveFailed("Impossible de modifier une humeur par défaut.")
+            throw MoodError.isDefaultMood("Impossible de modifier une humeur par défaut.")
+        }
+        
+        guard !creatingADuplicate(name: mood.name, ignoredId: mood.id) else {
+            throw MoodError.creatingADuplicate("Une humeur avec le nom \(mood.name) existe déjà.")
         }
         
         moodToUpdate.name = mood.name
@@ -131,6 +140,18 @@ class MoodController: ObservableObject {
     private func isDefaultMood(_ mood: Mood) -> Bool {
         return DefaultMoods.all.contains(where: { $0.id == mood.id })
     }
+    
+    // MARK: - alreadyExists
+    // Vérifie si une humeur existe déjà
+    func alreadyExists(name: String) -> Bool {
+        return DefaultMoods.all.contains(where: { $0.name == name })
+    }
+    
+    // MARK: - creatingADuplicate
+    // Vérifie si une humeur créée un doublon
+    func creatingADuplicate(name: String, ignoredId: UUID) -> Bool {
+        return DefaultMoods.all.contains(where: { $0.name == name && $0.id != ignoredId })
+    }
 }
 
 // MARK: - MoodError
@@ -140,6 +161,9 @@ enum MoodError: Error, LocalizedError {
     case moodNotFound(String)
     case deletionFailed(String)
     case saveFailed(String)
+    case isDefaultMood(String)
+    case alreadyExists(String)
+    case creatingADuplicate(String)
 
     var errorDescription: String? {
         switch self {
@@ -150,6 +174,12 @@ enum MoodError: Error, LocalizedError {
         case .deletionFailed(let message):
             return message
         case .saveFailed(let message):
+            return message
+        case .isDefaultMood(let message):
+            return message
+        case .alreadyExists(let message):
+            return message
+        case .creatingADuplicate(let message):
             return message
         }
     }
