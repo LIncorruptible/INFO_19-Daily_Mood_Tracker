@@ -16,17 +16,17 @@ class Activity {
     var englishTitle: String
     var frenchText: String
     var englishText: String
-    var duration: Int16
-    var minMoodLevel: Int16
-    var maxMoodLevel: Int16
+    var completionTimes: Int
+    var minMoodLevel: Int
+    var maxMoodLevel: Int
 
-    init(id: Int, frenchTitle: String, englishTitle: String, frenchText: String, englishText: String, duration: Int16, minMoodLevel: Int16, maxMoodLevel: Int16) {
+    init(id: Int, frenchTitle: String, englishTitle: String, frenchText: String, englishText: String, completionTimes: Int, minMoodLevel: Int, maxMoodLevel: Int) {
         self.id = id
         self.frenchTitle = frenchTitle
         self.englishTitle = englishTitle
         self.frenchText = frenchText
         self.englishText = englishText
-        self.duration = duration
+        self.completionTimes = completionTimes
         self.minMoodLevel = minMoodLevel
         self.maxMoodLevel = maxMoodLevel
     }

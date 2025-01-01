@@ -15,9 +15,9 @@ struct ActivityData: Codable {
     let englishTitle: String
     let frenchText: String
     let englishText: String
-    let completionTimes: Int16
-    let moodLevelMin: Int16
-    let moodLevelMax: Int16
+    let completionTimes: Int
+    let minMoodLevel: Int
+    let maxMoodLevel: Int
 }
 
 class ActivityImporter {
@@ -39,9 +39,9 @@ class ActivityImporter {
                     englishTitle: activityData.englishTitle,
                     frenchText: activityData.frenchText,
                     englishText: activityData.englishText,
-                    duration: activityData.completionTimes,
-                    minMoodLevel: activityData.moodLevelMin,
-                    maxMoodLevel: activityData.moodLevelMax
+                    completionTimes: activityData.completionTimes,
+                    minMoodLevel: activityData.minMoodLevel,
+                    maxMoodLevel: activityData.maxMoodLevel
                 )
                 context.insert(newActivity)
             }

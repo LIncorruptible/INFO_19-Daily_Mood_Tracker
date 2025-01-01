@@ -93,4 +93,13 @@ struct DailyMoodTrackerApp: App {
             print("Erreur lors de la suppression de tous les utilisateurs : \(error.localizedDescription)")
         }
     }
+    
+    private func printAllMoods() {
+        print("Liste des humeurs :")
+        let moodController = MoodsController()
+        let moods = moodController.fetchAllMoods(context: sharedModelContainer.mainContext)
+        for mood in moods {
+            print(mood.name, " - ", mood.level, " - ", mood.text)
+        }
+    }
 }
