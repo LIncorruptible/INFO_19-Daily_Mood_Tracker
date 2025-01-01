@@ -31,29 +31,8 @@ struct DashboardView: View {
                 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-                        
-                        // MARK: - Dernière humeur
-                        if let lastMood = moods.last {
-                            Text("Dernière humeur : \(lastMood.name)")
-                                .font(.headline)
-                            
-                            Image(lastMood.image)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 100)
-                                .padding(.bottom, 5)
-                            
-                            Text("Niveau : \(lastMood.level)")
-                                .font(.subheadline)
-                            Text(lastMood.text)
-                                .font(.body)
-                        } else {
-                            Text("Aucune humeur enregistrée.")
-                                .font(.headline)
-                        }
-                        
-                        Divider()
-                        
+                        // -- Section Dernière humeur supprimée --
+
                         // MARK: - Citation aléatoire
                         if let quote = randomQuote {
                             Text("Citation du jour")
@@ -80,6 +59,8 @@ struct DashboardView: View {
                         Divider()
                         
                         // MARK: - Suggestions d’activités
+                        // (facultatif) si tu veux les conserver, tu peux les laisser
+                        // ou commenter si tu ne veux plus de suggestions
                         if let lastMood = moods.last {
                             let suggestedActivities = activities.filter {
                                 $0.minMoodLevel <= lastMood.level && lastMood.level <= $0.maxMoodLevel
@@ -114,8 +95,7 @@ struct DashboardView: View {
                 // MARK: - Barre de navigation en bas
                 HStack(spacing: 20) {
                     NavigationLink("Humeurs") {
-                        Text("Page Humeurs à implémenter")
-                            .font(.title2)
+                        MoodsView()
                     }
                     NavigationLink("Journal") {
                         Text("Page Journal à implémenter")
@@ -141,6 +121,7 @@ struct DashboardView: View {
                 }
             }
             .onAppear {
+                // On pioche la citation de manière aléatoire
                 randomQuote = quotes.randomElement()
             }
         }
