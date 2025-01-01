@@ -44,6 +44,32 @@ class JournalController {
         }
     }
     
+    // MARK: - getAllByUser
+    // Récupération de tous les journaux d'un utilisateur spécifique
+    func getAllByUser(byUser user: User) throws -> [Journal] {
+        let fetchDescriptor = FetchDescriptor<Journal>(predicate: #Predicate { $0.user == user })
+        do {
+            return try context.fetch(fetchDescriptor)
+        } catch {
+            throw JournalError.fetchFailed("Erreur lors de la récupération de tous les journaux de l'utilisateur : \(error.localizedDescription)")
+        }
+    }
+    
+    // MARK: - getLatestByUser
+    // Récupération du dernier journal d'un utilisateur spécifique
+    func getLatestByUser(byUser user: User) throws -> Journal? {
+        let fetchDescriptor = FetchDescriptor<Journal>(
+            predicate: #Predicate { $0.user == user },
+            sortBy: [SortDescriptor(\.date, order: .reverse)]
+        )
+        do {
+            let journals = try context.fetch(fetchDescriptor)
+            return journals.first // Retourne le premier journal dans l'ordre décroissant des dates
+        } catch {
+            throw JournalError.fetchFailed("Erreur lors de la récupération du dernier journal de l'utilisateur : \(error.localizedDescription)")
+        }
+    }
+    
     // MARK: - deleteAll
     // Suppression de tous les journaux
     func deleteAll() throws {
