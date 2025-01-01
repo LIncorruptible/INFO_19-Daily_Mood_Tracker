@@ -11,13 +11,13 @@ import SwiftData
 
 @Model
 class Quote {
-    @Attribute(.unique) var id: Int
+    @Attribute(.unique) var id: UUID
     var title: String
     var author: String
     var frenchText: String
     var englishText: String
 
-    init(id: Int, title: String, author: String, frenchText: String, englishText: String) {
+    init(id: UUID = UUID(), title: String, author: String, frenchText: String, englishText: String) {
         self.id = id
         self.title = title
         self.author = author

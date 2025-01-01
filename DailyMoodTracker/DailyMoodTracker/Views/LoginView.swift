@@ -15,7 +15,6 @@ struct LoginView: View {
     @State private var isLoginSuccessful = false
     @State private var navigateToDashboard = false // État pour gérer la redirection
 
-    private let loginController = LoginController()
     @ObservedObject private var userSession = UserSession.shared // Utilisation de la session utilisateur
 
     var body: some View {
@@ -59,11 +58,11 @@ struct LoginView: View {
     }
 
     private func handleLogin() {
+        let loginController = LoginController(context: context)
         do {
             let user = try loginController.login(
                 email: email,
-                password: password,
-                context: context
+                password: password
             )
             userSession.login(user: user) // Stocker l'utilisateur dans la session
             isLoginSuccessful = true

@@ -13,7 +13,9 @@ struct DashboardView: View {
     
     @ObservedObject private var userSession = UserSession.shared
     @Environment(\.dismiss) private var dismiss
-    @State private var randomQuote: Quote?
+    @Environment(\.modelContext) private var context: ModelContext
+    
+    @State private var quoteOfTheDay: Quote?
     
     var body: some View {
         NavigationStack {
@@ -32,18 +34,19 @@ struct DashboardView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         // MARK: - Citation aléatoire
-                        if let quote = randomQuote {
+                        if let quote = quoteOfTheDay {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text("Citation du jour")
                                     .font(.headline)
                                 
-                                Text("« \(quote.frenchText) »")
+                                Text("« \(quote.frenchText) »") // Utilise la version française
                                     .italic()
                                     .font(.body)
                                 
                                 Text("- \(quote.author)")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
                             }
                             .padding(.top, 10)
                         } else {
@@ -89,10 +92,10 @@ struct DashboardView: View {
                 // MARK: - Barre de navigation en bas
                 HStack(spacing: 20) {
                     NavigationLink("Humeurs") {
-                        MoodsView()
+                        //MoodsView()
                     }
                     NavigationLink("Journal") {
-                        JournalsView() // Utilisation de la vue du journal
+                        //JournalsView() // Utilisation de la vue du journal
                     }
                     NavigationLink("Paramètres") {
                         //SettingsView() // Redirige vers une vue des paramètres
@@ -114,7 +117,7 @@ struct DashboardView: View {
                 }
             }
             .onAppear {
-                randomQuote = quotes.randomElement()
+                quoteOfTheDay = try? QuoteController(context: context).getRandom()
             }
         }
     }

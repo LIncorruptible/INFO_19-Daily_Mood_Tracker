@@ -9,8 +9,16 @@
 import Foundation
 import SwiftData
 
-class LoginController {
-    func login(email: String, password: String, context: ModelContext) throws -> User {
+class LoginController: UserController {
+    
+    // MARK: - Constructeur
+    override init(context: ModelContext) {
+        super.init(context: context)
+    }
+    
+    // MARK: - login
+    // Fonction pour connecter un utilisateur
+    func login(email: String, password: String) throws -> User {
         // Validation des champs
         guard email.isValidEmail else { throw LoginError.invalidEmail }
         guard !password.isEmpty else { throw LoginError.emptyPassword }
@@ -33,6 +41,7 @@ class LoginController {
     }
 }
 
+// MARK: - LoginError
 // Enum pour les erreurs de connexion
 enum LoginError: Error, LocalizedError {
     case invalidEmail

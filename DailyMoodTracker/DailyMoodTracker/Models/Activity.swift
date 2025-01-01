@@ -11,7 +11,7 @@ import SwiftData
 
 @Model
 class Activity {
-    @Attribute(.unique) var id: Int
+    @Attribute(.unique) var id: UUID
     var frenchTitle: String
     var englishTitle: String
     var frenchText: String
@@ -20,7 +20,7 @@ class Activity {
     var minMoodLevel: Int
     var maxMoodLevel: Int
 
-    init(id: Int, frenchTitle: String, englishTitle: String, frenchText: String, englishText: String, completionTimes: Int, minMoodLevel: Int, maxMoodLevel: Int) {
+    init(id: UUID = UUID(), frenchTitle: String, englishTitle: String, frenchText: String, englishText: String, completionTimes: Int, minMoodLevel: Int, maxMoodLevel: Int) {
         self.id = id
         self.frenchTitle = frenchTitle
         self.englishTitle = englishTitle

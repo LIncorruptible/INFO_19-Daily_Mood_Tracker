@@ -17,8 +17,6 @@ struct SignUpView: View {
     @State private var showSuccessAlert = false // Nouveau état pour afficher l'alerte
     @State private var navigateToLogin = false // Gère la navigation vers LoginView
 
-    private let signUpController = SignUpController()
-
     var body: some View {
         NavigationStack {
             Form {
@@ -57,13 +55,13 @@ struct SignUpView: View {
     }
 
     private func handleSignUp() {
+        let signUpController = SignUpController(context: context)
         do {
             try signUpController.signUp(
                 username: username,
                 email: email,
                 password: password,
-                confirmPassword: confirmPassword,
-                context: context
+                confirmPassword: confirmPassword
             )
             showSuccessAlert = true // Affiche l'alerte de succès
             clearFields()

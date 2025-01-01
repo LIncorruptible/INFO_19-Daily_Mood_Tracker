@@ -14,8 +14,8 @@ class Journal {
     @Attribute(.unique) var id: UUID
     var date: Date
     var notes: String
-    var mood: Mood
-    var user: User
+    @Relationship var mood: Mood
+    @Relationship var user: User
 
     init(id: UUID = UUID(), date: Date, notes: String, mood: Mood, user: User) {
         self.id = id
