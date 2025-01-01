@@ -9,9 +9,16 @@
 import Foundation
 import SwiftData
 
-class SignUpController {
+class SignUpController : UserController {
+    
+    // MARK: - Constructeur
+    override init(context: ModelContext) {
+        super.init(context: context)
+    }
+    
+    // MARK: - signUp
     // Fonction pour inscrire un nouvel utilisateur
-    func signUp(username: String, email: String, password: String, confirmPassword: String, context: ModelContext) throws {
+    func signUp(username: String, email: String, password: String, confirmPassword: String) throws {
         // Validation des champs
         guard !username.isEmpty else { throw SignUpError.emptyUsername }
         guard email.isValidEmail else { throw SignUpError.invalidEmail }
@@ -27,13 +34,13 @@ class SignUpController {
         // Création du nouvel utilisateur
         let hashedPassword = password.hash() // Hachage du mot de passe
         let newUser = User(id: UUID(), username: username, email: email, password: hashedPassword)
-
-        // Insérer dans le contexte
-        context.insert(newUser)
-        try context.save()
+        
+        // Enregistrement
+        try create(user: newUser)
     }
 }
 
+// MARK: - SignUpError
 // Enum pour les erreurs d'inscription
 enum SignUpError: Error, LocalizedError {
     case emptyUsername
@@ -53,6 +60,7 @@ enum SignUpError: Error, LocalizedError {
     }
 }
 
+// MARK: - Extensions
 // Extensions pour les validations
 extension String {
     var isValidEmail: Bool {

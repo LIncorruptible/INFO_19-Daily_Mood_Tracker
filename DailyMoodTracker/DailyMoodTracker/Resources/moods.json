@@ -1,0 +1,7 @@
+[
+    { "name": "Triste", "text": "Humeur plutôt négative", "level": 2, "image": "mood_sad" },
+    { "name": "Mélancolique", "text": "Un peu morose", "level": 4, "image": "mood_melancolique" },
+    { "name": "Neutre", "text": "Ni triste, ni joyeux", "level": 6, "image": "mood_neutre" },
+    { "name": "Enthousiaste", "text": "Humeur motivée", "level": 8, "image": "mood_enthousiaste" },
+    { "name": "Exalté", "text": "Joie très intense", "level": 10, "image": "mood_exalte" }
+]

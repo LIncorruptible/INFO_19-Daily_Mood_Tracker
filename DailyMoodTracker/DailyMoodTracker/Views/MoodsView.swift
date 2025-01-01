@@ -9,13 +9,11 @@ enum MoodFormMode {
 }
 
 struct MoodsView: View {
-    
-    // MARK: - Contrôleur
-    @StateObject private var controller = MoodsController()
 
-    // MARK: - Humeurs via SwiftData
-    @Query var customMoods: [Mood]
+    // MARK: - Humeurs
+    @State private var customMoods: [Mood] = []
     @Environment(\.modelContext) private var context
+    @State private var controller: MoodController?
 
     // MARK: - Formulaire d'ajout/modification
     @State private var showForm: Bool = false
@@ -24,7 +22,7 @@ struct MoodsView: View {
     // Champs du formulaire
     @State private var formName: String = ""
     @State private var formDescription: String = ""
-    @State private var formLevel: Int16 = 5
+    @State private var formLevel: Int = 5
     @State private var formImageData: Data? = nil
 
     var body: some View {
@@ -48,7 +46,14 @@ struct MoodsView: View {
                     CustomMoodsList(
                         moods: customMoods,
                         onEdit: { mood in setupEditForm(with: mood) },
-                        onDelete: { mood in controller.deleteMood(mood, context: context) }
+                        onDelete: { mood in
+                            do {
+                                try controller!.deleteById(byId: mood.id)
+                                fetchCustomMoods()
+                            } catch {
+                                handleError(error)
+                            }
+                        }
                     )
                 }
 
@@ -65,6 +70,10 @@ struct MoodsView: View {
                 Spacer()
             }
             .navigationTitle("Gestion des Humeurs")
+            .onAppear {
+                controller = MoodController(context: context)
+                fetchCustomMoods()
+            }
             .sheet(isPresented: $showForm) {
                 MoodForm(
                     mode: formMode,
@@ -79,7 +88,7 @@ struct MoodsView: View {
         }
     }
 
-    // Prépare le formulaire pour l'ajout
+    // MARK: - Prépare le formulaire pour l'ajout
     private func setupAddForm() {
         formMode = .add
         formName = ""
@@ -89,7 +98,7 @@ struct MoodsView: View {
         showForm = true
     }
 
-    // Prépare le formulaire pour l'édition
+    // MARK: - Prépare le formulaire pour l'édition
     private func setupEditForm(with mood: Mood) {
         formMode = .edit(mood)
         formName = mood.name
@@ -99,20 +108,46 @@ struct MoodsView: View {
         showForm = true
     }
 
-    // Enregistre les données selon le mode
+    // MARK: - Enregistre les données selon le mode
     private func performSave() {
-        switch formMode {
-        case .add:
-            controller.addNewMood(name: formName, text: formDescription, level: formLevel, imageData: formImageData, context: context)
-        case .edit(let mood):
-            controller.updateMood(
-                mood,
-                newName: formName,
-                newText: formDescription,
-                newLevel: formLevel,
-                newImageData: formImageData,
-                context: context
-            )
+        do {
+            switch formMode {
+            case .add:
+                let moodToCreate: Mood = Mood(
+                    name: formName,
+                    text: formDescription,
+                    level: formLevel,
+                    userImageData: formImageData
+                )
+                try controller!.create(mood: moodToCreate)
+            case .edit(let mood):
+                let moodToUpdate: Mood = Mood(
+                    id: mood.id,
+                    name: formName,
+                    text: formDescription,
+                    level: formLevel,
+                    userImageData: formImageData
+                )
+                try controller!.update(mood: moodToUpdate)
+            }
+            fetchCustomMoods()
+            showForm = false
+        } catch {
+            handleError(error)
+        }
+    }
+
+    // MARK: - Gestion des erreurs
+    private func handleError(_ error: Error) {
+        print("Une erreur est survenue : \(error.localizedDescription)")
+    }
+
+    // MARK: - Récupération des humeurs personnalisées
+    private func fetchCustomMoods() {
+        do {
+            customMoods = try controller!.getAll(withoutDefault: true)
+        } catch {
+            handleError(error)
         }
     }
 }

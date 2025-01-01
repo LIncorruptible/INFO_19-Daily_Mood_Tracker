@@ -14,7 +14,7 @@ class Mood {
     @Attribute(.unique) var id: UUID
     var name: String
     var text: String
-    var level: Int16
+    var level: Int
     
     // Image optionnelle (nom d'asset), peut être nil
     var image: String?
@@ -26,7 +26,7 @@ class Mood {
         id: UUID = UUID(),
         name: String,
         text: String,
-        level: Int16,
+        level: Int,
         image: String? = nil,
         userImageData: Data? = nil
     ) {

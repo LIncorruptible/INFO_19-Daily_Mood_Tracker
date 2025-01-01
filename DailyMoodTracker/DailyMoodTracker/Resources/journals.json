@@ -1,0 +1,14 @@
+[
+    {
+        "date": "2025-01-01T10:00:00Z",
+        "notes": "Une journée très calme.",
+        "moodID": "UUID_1",
+        "userID": "UUID_2"
+    },
+    {
+        "date": "2025-01-02T14:30:00Z",
+        "notes": "J'ai ressenti beaucoup de motivation.",
+        "moodID": "UUID_3",
+        "userID": "UUID_4"
+    }
+]

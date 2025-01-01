@@ -9,9 +9,19 @@ import Foundation
 import SwiftData
 
 class UserController {
-    // MARK: - Récupération de tous les utilisateurs
-    func getAllUsers(context: ModelContext) throws -> [User] {
-        let fetchDescriptor = FetchDescriptor<User>() // Récupère tous les utilisateurs
+    
+    // MARK: - Context
+    var context: ModelContext
+    
+    // MARK: - Constructeur
+    init(context: ModelContext) {
+        self.context = context
+    }
+    
+    // MARK: - getAll
+    // Récupération de tous les utilisateurs
+    func getAll() throws -> [User] {
+        let fetchDescriptor = FetchDescriptor<User>()
         do {
             return try context.fetch(fetchDescriptor)
         } catch {
@@ -19,35 +29,24 @@ class UserController {
         }
     }
 
-    // MARK: - Récupération d'un utilisateur spécifique
-    func getUser(byId id: UUID, context: ModelContext) throws -> User? {
-        let fetchDescriptor = FetchDescriptor<User>(predicate: #Predicate { $0.id == id }) // Filtre par ID
-        do {
-            let users = try context.fetch(fetchDescriptor)
-            return users.first
-        } catch {
-            throw UserError.fetchFailed("Erreur lors de la récupération de l'utilisateur avec l'ID \(id): \(error.localizedDescription)")
-        }
-    }
-
-    // MARK: - Suppression d'un utilisateur spécifique
-    func deleteUser(byId id: UUID, context: ModelContext) throws {
-        let fetchDescriptor = FetchDescriptor<User>(predicate: #Predicate { $0.id == id }) // Filtre par ID
+    // MARK: - getById
+    // Récupération d'un utilisateur spécifique par son ID
+    func getById(byId id: UUID) throws -> User? {
+        let fetchDescriptor = FetchDescriptor<User>(predicate: #Predicate { $0.id == id })
         do {
             let users = try context.fetch(fetchDescriptor)
             guard let user = users.first else {
                 throw UserError.userNotFound("Utilisateur avec l'ID \(id) non trouvé.")
             }
-            context.delete(user)
-            try context.save()
-            print("Utilisateur avec l'ID \(id) supprimé avec succès.")
+            return user
         } catch {
-            throw UserError.deletionFailed("Erreur lors de la suppression de l'utilisateur avec l'ID \(id): \(error.localizedDescription)")
+            throw UserError.fetchFailed("Erreur lors de la récupération de l'utilisateur avec l'ID \(id): \(error.localizedDescription)")
         }
     }
-
-    // MARK: - Suppression de tous les utilisateurs
-    func deleteAllUsers(context: ModelContext) throws {
+    
+    // MARK: - deleteAll
+    // Suppression de tous les utilisateurs
+    func deleteAll() throws {
         let fetchDescriptor = FetchDescriptor<User>() // Récupère tous les utilisateurs
         do {
             let users = try context.fetch(fetchDescriptor)
@@ -60,13 +59,65 @@ class UserController {
             throw UserError.deletionFailed("Erreur lors de la suppression de tous les utilisateurs : \(error.localizedDescription)")
         }
     }
+
+    // MARK: - deleteById
+    // Suppression d'un utilisateur spécifique par son ID
+    func deleteById(byId id: UUID) throws {
+        let fetchDescriptor = FetchDescriptor<User>(predicate: #Predicate { $0.id == id })
+        do {
+            let users = try context.fetch(fetchDescriptor)
+            guard let user = users.first else {
+                throw UserError.userNotFound("Utilisateur avec l'ID \(id) non trouvé.")
+            }
+            context.delete(user)
+            try context.save()
+            print("Utilisateur avec l'ID \(id) supprimé avec succès.")
+        } catch {
+            throw UserError.deletionFailed("Erreur lors de la suppression de l'utilisateur avec l'ID \(id): \(error.localizedDescription)")
+        }
+    }
+    
+    // MARK: - create
+    // Enregistrement d'un nouvel utilisateur
+    func create(user: User) throws {
+        context.insert(user)
+        do {
+            try context.save()
+            print("Utilisateur enregistré avec succès.")
+        } catch {
+            throw UserError.saveFailed("Erreur lors de l'enregistrement de l'utilisateur : \(error.localizedDescription)")
+        }
+    }
+    
+    // MARK: - update
+    // Mise à jour d'un utilisateur
+    func update(user: User) throws {
+        
+        // Récupération de l'utilisateur par son ID
+        let userToUpdate = try getById(byId: user.id)
+        
+        // Mise à jour des informations
+        userToUpdate?.username = user.username
+        userToUpdate?.password = user.password
+        userToUpdate?.email = user.email
+        userToUpdate?.dateCreated = user.dateCreated
+        
+        do {
+            try context.save()
+            print("Utilisateur mis à jour avec succès.")
+        } catch {
+            throw UserError.saveFailed("Erreur lors de la mise à jour de l'utilisateur : \(error.localizedDescription)")
+        }
+    }
 }
 
-// MARK: - Enum des erreurs possibles pour UserController
+// MARK: - UserError
+// Enumérations pour les erreurs
 enum UserError: Error, LocalizedError {
     case fetchFailed(String)
     case userNotFound(String)
     case deletionFailed(String)
+    case saveFailed(String)
 
     var errorDescription: String? {
         switch self {
@@ -75,6 +126,8 @@ enum UserError: Error, LocalizedError {
         case .userNotFound(let message):
             return message
         case .deletionFailed(let message):
+            return message
+        case .saveFailed(let message):
             return message
         }
     }

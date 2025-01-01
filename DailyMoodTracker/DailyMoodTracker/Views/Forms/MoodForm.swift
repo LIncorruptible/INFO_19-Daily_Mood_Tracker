@@ -15,7 +15,7 @@ struct MoodForm: View {
     var mode: MoodFormMode
     @Binding var name: String
     @Binding var description: String
-    @Binding var level: Int16
+    @Binding var level: Int
     @Binding var selectedImageData: Data?
     @State private var selectedItem: PhotosPickerItem? = nil
 

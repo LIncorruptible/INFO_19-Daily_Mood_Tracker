@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftData
+import SwiftUI
 
 class UserSession: ObservableObject {
     static let shared = UserSession() // Singleton partagé
@@ -17,6 +19,8 @@ class UserSession: ObservableObject {
     }
 
     @Published var isLoggedIn: Bool = false // Nouvel état global pour la connexion
+
+    @Environment(\.modelContext) private var context: ModelContext // Contexte SwiftData
 
     private init() {
         loadUserFromDefaults()
@@ -52,7 +56,6 @@ class UserSession: ObservableObject {
     // Charger l'utilisateur connecté depuis UserDefaults
     private func loadUserFromDefaults() {
         guard let data = UserDefaults.standard.data(forKey: "loggedInUser") else {
-            currentUser = nil
             return
         }
 

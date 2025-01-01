@@ -17,13 +17,22 @@ class User: Identifiable, Codable {
     var password: String
     var dateCreated: Date
 
-    // MARK: - Constructeur
+    // MARK: - Constructeur par défaut
     init(id: UUID = UUID(), username: String, email: String, password: String, dateCreated: Date = Date()) {
         self.id = id
         self.username = username
         self.email = email
         self.password = password
         self.dateCreated = dateCreated
+    }
+    
+    // MARK: - Constructeur par Objet
+    init(from user: User) {
+        self.id = user.id
+        self.username = user.username
+        self.email = user.email
+        self.password = user.password
+        self.dateCreated = user.dateCreated
     }
     
     // MARK: - Encodable
@@ -48,10 +57,6 @@ class User: Identifiable, Codable {
     
     // MARK: - CodingKeys
     private enum CodingKeys: String, CodingKey {
-        case id
-        case username
-        case email
-        case password
-        case dateCreated
+        case id, username, email, password, dateCreated
     }
 }
