@@ -31,25 +31,21 @@ struct DashboardView: View {
                 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-                        // -- Section Dernière humeur supprimée --
-
                         // MARK: - Citation aléatoire
                         if let quote = randomQuote {
-                            Text("Citation du jour")
-                                .font(.headline)
-                            
-                            Text(quote.title)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            
-                            Text("« \(quote.frenchText) »")
-                                .italic()
-                                .font(.body)
-                            
-                            Text("- \(quote.author)")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text("Citation du jour")
+                                    .font(.headline)
+                                
+                                Text("« \(quote.frenchText) »")
+                                    .italic()
+                                    .font(.body)
+                                
+                                Text("- \(quote.author)")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.top, 10)
                         } else {
                             Text("Aucune citation disponible pour le moment.")
                                 .font(.headline)
@@ -59,8 +55,6 @@ struct DashboardView: View {
                         Divider()
                         
                         // MARK: - Suggestions d’activités
-                        // (facultatif) si tu veux les conserver, tu peux les laisser
-                        // ou commenter si tu ne veux plus de suggestions
                         if let lastMood = moods.last {
                             let suggestedActivities = activities.filter {
                                 $0.minMoodLevel <= lastMood.level && lastMood.level <= $0.maxMoodLevel
@@ -88,7 +82,7 @@ struct DashboardView: View {
                         }
                     }
                     .padding()
-                } // Fin du ScrollView
+                }
                 
                 Spacer()
                 
@@ -98,22 +92,21 @@ struct DashboardView: View {
                         MoodsView()
                     }
                     NavigationLink("Journal") {
-                        Text("Page Journal à implémenter")
-                            .font(.title2)
+                        JournalsView() // Utilisation de la vue du journal
                     }
                     NavigationLink("Paramètres") {
-                        Text("Page Paramètres à implémenter")
-                            .font(.title2)
+                        //SettingsView() // Redirige vers une vue des paramètres
                     }
                 }
                 .padding()
-            } // Fin du VStack
+            }
             .navigationTitle("Tableau de bord")
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         userSession.logout()
+                        dismiss()
                     }) {
                         Text("Déconnexion")
                             .foregroundColor(.red)
@@ -121,7 +114,6 @@ struct DashboardView: View {
                 }
             }
             .onAppear {
-                // On pioche la citation de manière aléatoire
                 randomQuote = quotes.randomElement()
             }
         }

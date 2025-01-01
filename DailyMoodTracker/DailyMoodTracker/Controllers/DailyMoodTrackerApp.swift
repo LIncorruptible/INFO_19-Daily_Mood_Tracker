@@ -21,9 +21,10 @@ struct DailyMoodTrackerApp: App {
             if userSession.isLoggedIn {
                 DashboardView() // Redirige vers DashboardView si l'utilisateur est connecté
                 .onAppear {
-                            importQuotesIfNeeded()
-                            importActivitiesIfNeeded()
-                        }
+                    importQuotesIfNeeded()
+                    importActivitiesIfNeeded()
+                    printAllMoods()
+                }
             } else {
                 LoginView() // Sinon, redirige vers LoginView
                     .onAppear {

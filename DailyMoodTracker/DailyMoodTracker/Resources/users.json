@@ -1,0 +1,14 @@
+[
+    {
+        "username": "mael",
+        "email": "mael@example.com",
+        "password": "1234",
+        "dateInscription": "2025-01-01T08:00:00Z"
+    },
+    {
+        "username": "adrien",
+        "email": "adrien@example.com",
+        "password": "5678",
+        "dateInscription": "2025-01-02T09:00:00Z"
+    }
+]

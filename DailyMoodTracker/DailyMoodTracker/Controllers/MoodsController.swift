@@ -11,11 +11,21 @@ import SwiftUI
 
 class MoodsController: ObservableObject {
     
+    func getMood(byId id: UUID, context: ModelContext) throws -> Mood? {
+        let fetchDescriptor = FetchDescriptor<Mood>(predicate: #Predicate { $0.id == id }) // Filtre par ID
+        do {
+            let moods = try context.fetch(fetchDescriptor)
+            return moods.first
+        } catch {
+            throw MoodError.fetchFailed("Erreur lors de la récupération de l’humeur avec l'ID \(id): \(error.localizedDescription)")
+        }
+    }
+    
     /// Crée une nouvelle humeur dans SwiftData
     func addNewMood(
         name: String,
         text: String,
-        level: Int16,
+        level: Int,
         imageData: Data?,
         context: ModelContext
     ) {
@@ -40,7 +50,7 @@ class MoodsController: ObservableObject {
         _ mood: Mood,
         newName: String,
         newText: String,
-        newLevel: Int16,
+        newLevel: Int,
         newImageData: Data?,
         context: ModelContext
     ) {
@@ -68,6 +78,35 @@ class MoodsController: ObservableObject {
             print("Humeur supprimée.")
         } catch {
             print("Erreur lors de la suppression : \(error)")
+        }
+    }
+    
+    /// Récupère toutes les humeurs
+    func fetchAllMoods(context: ModelContext) -> [Mood] {
+        let fetchDescriptor = FetchDescriptor<Mood>()
+        do {
+            return try context.fetch(fetchDescriptor)
+        } catch {
+            print("Erreur lors de la récupération des humeurs : \(error)")
+            return []
+        }
+    }
+}
+
+// MARK: - Enum des erreurs possibles pour UserController
+enum MoodError: Error, LocalizedError {
+    case fetchFailed(String)
+    case moodNotFound(String)
+    case deletionFailed(String)
+
+    var errorDescription: String? {
+        switch self {
+        case .fetchFailed(let message):
+            return message
+        case .moodNotFound(let message):
+            return message
+        case .deletionFailed(let message):
+            return message
         }
     }
 }
