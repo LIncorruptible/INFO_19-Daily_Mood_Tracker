@@ -44,6 +44,20 @@ class ActivityController {
         }
     }
     
+    // MARK: - getManyRandomly
+    // Récupération de plusieurs activités aléatoirement
+    func getManyRandomly(howMany: Int, minLevel: Int = 0, maxLevel: Int = 10) throws -> [Activity] {
+        let fetchDescriptor = FetchDescriptor<Activity>()
+        do {
+            var activities = try context.fetch(fetchDescriptor)
+            activities = activities.filter { $0.minMoodLevel >= minLevel && $0.maxMoodLevel <= maxLevel }
+            activities.shuffle()
+            return Array(activities.prefix(howMany))
+        } catch {
+            throw ActivityError.fetchFailed("Erreur lors de la récupération des activités aléatoires : \(error.localizedDescription)")
+        }
+    }
+    
     // MARK: - deleteAll
     // Suppression de toutes les activités
     func deleteAll() throws {

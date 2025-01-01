@@ -16,6 +16,8 @@ struct DashboardView: View {
     @Environment(\.modelContext) private var context: ModelContext
     
     @State private var quoteOfTheDay: Quote?
+    @State private var currentMood: Mood? // Variable pour l'humeur actuelle
+    @State private var suggestedActivities: [Activity] = [] // Activités suggérées
     
     var body: some View {
         NavigationStack {
@@ -33,6 +35,25 @@ struct DashboardView: View {
                 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
+                        // MARK: - Humeur actuelle
+                        if let mood = currentMood {
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text("Humeur actuelle")
+                                    .font(.headline)
+                                
+                                Text(mood.name) // Affiche uniquement le nom de l'humeur
+                                    .font(.subheadline)
+                                    .bold()
+                            }
+                            .padding(.top, 10)
+                        } else {
+                            Text("Aucune humeur actuelle définie.")
+                                .font(.headline)
+                                .padding(.top, 10)
+                        }
+                        
+                        Divider()
+                        
                         // MARK: - Citation aléatoire
                         if let quote = quoteOfTheDay {
                             VStack(alignment: .leading, spacing: 5) {
@@ -58,30 +79,24 @@ struct DashboardView: View {
                         Divider()
                         
                         // MARK: - Suggestions d’activités
-                        if let lastMood = moods.last {
-                            let suggestedActivities = activities.filter {
-                                $0.minMoodLevel <= lastMood.level && lastMood.level <= $0.maxMoodLevel
-                            }
+                        if !suggestedActivities.isEmpty {
+                            Text("Suggestions d’activités :")
+                                .font(.headline)
                             
-                            if !suggestedActivities.isEmpty {
-                                Text("Suggestions d’activités :")
-                                    .font(.headline)
-                                
-                                ForEach(suggestedActivities, id: \.id) { activity in
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text(activity.frenchTitle)
-                                            .font(.subheadline)
-                                            .bold()
-                                        Text(activity.frenchText)
-                                            .font(.caption)
-                                            .foregroundColor(.secondary)
-                                    }
-                                    .padding(.vertical, 4)
+                            ForEach(suggestedActivities, id: \.id) { activity in
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(activity.frenchTitle)
+                                        .font(.subheadline)
+                                        .bold()
+                                    Text(activity.frenchText)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
                                 }
-                            } else {
-                                Text("Aucune activité suggérée pour l’humeur actuelle.")
-                                    .font(.subheadline)
+                                .padding(.vertical, 4)
                             }
+                        } else {
+                            Text("Aucune activité suggérée pour l’humeur actuelle.")
+                                .font(.subheadline)
                         }
                     }
                     .padding()
@@ -95,10 +110,10 @@ struct DashboardView: View {
                         MoodsView() // Redirige vers la vue des humeurs
                     }
                     NavigationLink("Journal") {
-                        //JournalsView() // Utilisation de la vue du journal
+                        // JournalsView() // Utilisation de la vue du journal
                     }
                     NavigationLink("Paramètres") {
-                        //SettingsView() // Redirige vers une vue des paramètres
+                        // SettingsView() // Redirige vers une vue des paramètres
                     }
                 }
                 .padding()
@@ -117,7 +132,33 @@ struct DashboardView: View {
                 }
             }
             .onAppear {
+                // Récupération de la citation
                 quoteOfTheDay = try? QuoteController(context: context).getRandom()
+                
+                // Récupération de l'humeur actuelle
+                if let currentUser = userSession.currentUser {
+                    if let latestJournal = try? JournalController(context: context).getLatestByUser(byUser: currentUser) {
+                        currentMood = latestJournal.mood
+                        
+                        // Suggestions d'activités basées sur l'humeur
+                        if let mood = currentMood {
+                            do {
+                                let activityController = ActivityController(context: context)
+                                suggestedActivities = try activityController.getManyRandomly(
+                                    howMany: 5,
+                                    minLevel: mood.level,
+                                    maxLevel: mood.level
+                                )
+                            } catch {
+                                print("Erreur lors de la récupération des activités : \(error.localizedDescription)")
+                                suggestedActivities = []
+                            }
+                        }
+                    } else {
+                        currentMood = nil
+                        suggestedActivities = []
+                    }
+                }
             }
         }
     }

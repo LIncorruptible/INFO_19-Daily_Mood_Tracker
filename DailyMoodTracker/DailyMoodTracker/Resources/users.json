@@ -1,14 +1,20 @@
 [
     {
-        "username": "mael",
-        "email": "mael@example.com",
-        "password": "1234",
-        "dateInscription": "2025-01-01T08:00:00Z"
+        "username": "Mael",
+        "email": "mael@email.com",
+        "password": "7573657232303235505744",
+        "dateCreated": "2025-01-01T10:00:00Z"
     },
     {
-        "username": "adrien",
-        "email": "adrien@example.com",
-        "password": "5678",
-        "dateInscription": "2025-01-02T09:00:00Z"
+        "username": "Adrien",
+        "email": "adrien@email.com",
+        "password": "7573657232303235505744",
+        "dateCreated": "2025-01-02T10:00:00Z"
+    },
+    {
+        "username": "Enseignant",
+        "email": "enseignant@email.com",
+        "password": "7573657232303235505744",
+        "dateCreated": "2025-01-03T10:00:00Z"
     }
 ]

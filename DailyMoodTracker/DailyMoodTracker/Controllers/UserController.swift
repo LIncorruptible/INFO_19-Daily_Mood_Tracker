@@ -83,9 +83,23 @@ class UserController {
         context.insert(user)
         do {
             try context.save()
-            print("Utilisateur enregistré avec succès.")
+            print("Utilisateur enregistré avec succès. " + user.password)
         } catch {
             throw UserError.saveFailed("Erreur lors de l'enregistrement de l'utilisateur : \(error.localizedDescription)")
+        }
+    }
+    
+    // MARK: - createMany
+    // Enregistrement de plusieurs utilisateurs
+    func createMany(users: [User]) throws {
+        for user in users {
+            context.insert(user)
+        }
+        do {
+            try context.save()
+            print("Utilisateurs enregistrés.")
+        } catch {
+            throw UserError.saveFailed("Erreur lors de l'enregistrement des utilisateurs : \(error.localizedDescription)")
         }
     }
     

@@ -26,15 +26,18 @@ struct RootView: View {
         }
     }
 
+    // MARK: - Initial
     private func initializeData() {
         do {
             try importQuotesIfNeeded()
             try importActivitiesIfNeeded()
+            try importUsersIfNeeded()
         } catch {
             print("Erreur lors de l'initialisation des données de l'application : \(error)")
         }
     }
 
+    // MARK: - Import
     private func importQuotesIfNeeded() throws {
         let quoteController = QuoteController(context: context)
         let quotes = try quoteController.getAll()
@@ -50,6 +53,15 @@ struct RootView: View {
         if activities.isEmpty {
             try activityController.createMany(activities: ActivityImporter.importFromJSON())
             print("Activités importées avec succès")
+        }
+    }
+    
+    private func importUsersIfNeeded() throws {
+        let userController = UserController(context: context)
+        let users = try userController.getAll()
+        if users.isEmpty {
+            try userController.createMany(users: UserImporter.importFromJSON())
+            print("Utilisateurs importés avec succès")
         }
     }
 }
