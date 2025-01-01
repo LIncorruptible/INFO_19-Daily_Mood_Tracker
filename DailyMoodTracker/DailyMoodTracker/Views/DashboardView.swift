@@ -92,7 +92,7 @@ struct DashboardView: View {
                 // MARK: - Barre de navigation en bas
                 HStack(spacing: 20) {
                     NavigationLink("Humeurs") {
-                        //MoodsView()
+                        MoodsView() // Redirige vers la vue des humeurs
                     }
                     NavigationLink("Journal") {
                         //JournalsView() // Utilisation de la vue du journal
