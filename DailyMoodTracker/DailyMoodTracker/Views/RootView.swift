@@ -36,7 +36,6 @@ struct RootView: View {
     }
 
     private func importQuotesIfNeeded() throws {
-        print("Importation des citations...")
         let quoteController = QuoteController(context: context)
         let quotes = try quoteController.getAll()
         if quotes.isEmpty {
@@ -46,7 +45,6 @@ struct RootView: View {
     }
 
     private func importActivitiesIfNeeded() throws {
-        print("Importation des activités...")
         let activityController = ActivityController(context: context)
         let activities = try activityController.getAll()
         if activities.isEmpty {
