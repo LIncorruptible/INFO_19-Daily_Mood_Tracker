@@ -107,6 +107,20 @@ class MoodController: ObservableObject {
         }
     }
     
+    // MARK: - createMany
+    // Création de plusieurs humeurs
+    func createMany(moods: [Mood]) throws {
+        for mood in moods {
+            context.insert(mood)
+        }
+        do {
+            try context.save()
+            print("Humeurs créées.")
+        } catch {
+            throw MoodError.saveFailed("Erreur lors de la création des humeurs : \(error.localizedDescription)")
+        }
+    }
+    
     // MARK: - update
     // Mise à jour d'une humeur
     func update(mood: Mood) throws {
@@ -138,7 +152,7 @@ class MoodController: ObservableObject {
     // MARK: - isDefaultMood
     // Vérifie si une humeur fait partie des humeurs par défaut
     private func isDefaultMood(_ mood: Mood) -> Bool {
-        return DefaultMoods.all.contains(where: { $0.id == mood.id })
+        return DefaultMoods.all.contains(where: { $0.name == mood.name })
     }
     
     // MARK: - alreadyExists
