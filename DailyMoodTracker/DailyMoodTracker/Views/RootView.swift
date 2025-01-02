@@ -5,7 +5,6 @@
 //  Created by etudiant on 01/01/2025.
 //
 
-
 import SwiftUI
 import SwiftData
 
@@ -32,6 +31,7 @@ struct RootView: View {
             try importQuotesIfNeeded()
             try importActivitiesIfNeeded()
             try importUsersIfNeeded()
+            try importDefaultMoods()
         } catch {
             print("Erreur lors de l'initialisation des données de l'application : \(error)")
         }
@@ -62,6 +62,15 @@ struct RootView: View {
         if users.isEmpty {
             try userController.createMany(users: UserImporter.importFromJSON())
             print("Utilisateurs importés avec succès")
+        }
+    }
+    
+    private func importDefaultMoods() throws {
+        let moodController = MoodController(context: context)
+        let moods = try moodController.getAll()
+        if moods.isEmpty {
+            try moodController.createMany(moods: DefaultMoods.all)
+            print("Hummeurs importées avec succès")
         }
     }
 }

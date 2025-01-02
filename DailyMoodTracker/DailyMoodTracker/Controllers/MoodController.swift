@@ -107,6 +107,20 @@ class MoodController: ObservableObject {
         }
     }
     
+    // MARK: - createMany
+    // Création de plusieurs humeurs
+    func createMany(moods: [Mood]) throws {
+        for mood in moods {
+            context.insert(mood)
+        }
+        do {
+            try context.save()
+            print("Humeurs créées.")
+        } catch {
+            throw MoodError.saveFailed("Erreur lors de la création des humeurs : \(error.localizedDescription)")
+        }
+    }
+    
     // MARK: - update
     // Mise à jour d'une humeur
     func update(mood: Mood) throws {
