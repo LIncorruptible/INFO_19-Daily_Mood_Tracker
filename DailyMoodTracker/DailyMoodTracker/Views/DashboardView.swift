@@ -133,7 +133,7 @@ struct DashboardView: View {
             }
             .onAppear {
                 // Récupération de la citation
-                quoteOfTheDay = try? QuoteController(context: context).getRandom()
+                getDailyQuote()
                 
                 // Récupération de l'humeur actuelle
                 if let currentUser = userSession.currentUser {
@@ -160,6 +160,20 @@ struct DashboardView: View {
                     }
                 }
             }
+        }
+    }
+    
+    private func getDailyQuote() {
+        if Calendar.current.isDateInToday(userSession.lastQuoteDateChanged) {
+            if let currentQuoteUUID = userSession.currentQuoteUUID {
+                quoteOfTheDay = quotes.first { $0.id == currentQuoteUUID }
+            } else {
+                quoteOfTheDay = quotes.randomElement()
+                userSession.updateQuote(quoteUUID: quoteOfTheDay?.id ?? UUID())
+            }
+        } else {
+            quoteOfTheDay = quotes.randomElement()
+            userSession.updateQuote(quoteUUID: quoteOfTheDay?.id ?? UUID())
         }
     }
 }
