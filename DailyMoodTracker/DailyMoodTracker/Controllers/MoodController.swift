@@ -152,7 +152,7 @@ class MoodController: ObservableObject {
     // MARK: - isDefaultMood
     // Vérifie si une humeur fait partie des humeurs par défaut
     private func isDefaultMood(_ mood: Mood) -> Bool {
-        return DefaultMoods.all.contains(where: { $0.id == mood.id })
+        return DefaultMoods.all.contains(where: { $0.name == mood.name })
     }
     
     // MARK: - alreadyExists
