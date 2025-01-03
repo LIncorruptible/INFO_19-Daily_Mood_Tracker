@@ -110,7 +110,7 @@ struct DashboardView: View {
                         MoodsView() // Redirige vers la vue des humeurs
                     }
                     NavigationLink("Journal") {
-                        // JournalsView() // Utilisation de la vue du journal
+                        JournalsView() // Utilisation de la vue du journal
                     }
                     NavigationLink("Paramètres") {
                         // SettingsView() // Redirige vers une vue des paramètres

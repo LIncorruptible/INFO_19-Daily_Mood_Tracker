@@ -10,7 +10,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Mood {
+class Mood: Identifiable, Hashable {
     @Attribute(.unique) var id: UUID
     var name: String
     var text: String
@@ -36,5 +36,13 @@ class Mood {
         self.level = level
         self.image = image
         self.userImageData = userImageData
+    }
+    
+    static func == (lhs: Mood, rhs: Mood) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
