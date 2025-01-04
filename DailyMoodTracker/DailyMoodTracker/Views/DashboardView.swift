@@ -20,17 +20,32 @@ struct DashboardView: View {
     @State private var suggestedActivities: [Activity] = []
     
     @State private var shouldRefresh: Bool = false
-    
+    @State private var isLandscape: Bool = UIDevice.current.orientation.isLandscape
+        
     var body: some View {
         NavigationStack {
-            verticalDashboard()
+            Group {
+                if isLandscape {
+                    horizontalDashboard()
+                } else {
+                    verticalDashboard()
+                }
+            }
         }
         .onAppear {
             refreshView()
+            detectOrientation()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+            detectOrientation()
         }
         .onChange(of: shouldRefresh) { _ in
             refreshView()
         }
+    }
+    
+    private func detectOrientation() {
+        isLandscape = UIDevice.current.orientation.isLandscape
     }
     
     @ViewBuilder
@@ -76,6 +91,59 @@ struct DashboardView: View {
             // Barre de navigation en bas
             bottomNavigationBar()
                 .padding(.horizontal)
+        }
+    }
+    
+    @ViewBuilder
+    private func horizontalDashboard() -> some View {
+        HStack() {
+            VStack() {
+                
+                HStack() {
+                    VStack(alignment: .leading, spacing: 20) {
+                        // Section bienvenue
+                        HStack {
+                            Text("👋 Bienvenue, \(userSession.currentUser?.username ?? "Utilisateur")!")
+                                .font(.largeTitle)
+                                .bold()
+                            Spacer()
+                        }
+                        .padding([.top, .horizontal])
+                        
+                        // Section Humeur actuelle
+                        moodSection()
+                            .padding(.horizontal)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 20) {
+                        // Section Citation du jour
+                        quoteSection()
+                            .padding(.horizontal)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("💡 Suggestions d’activités")
+                            .font(.headline)
+                            .bold()
+                            .padding(.horizontal)
+                        
+                        ScrollView {
+                            activitySuggestions()
+                                .padding(.horizontal)
+                        }
+                        .frame(maxHeight: .infinity)
+                    }
+                }
+                .padding(20)
+                
+                HStack() {
+                    // Barre de navigation en bas
+                    bottomNavigationBar()
+                        .padding(.horizontal)
+                }
+                
+            }
+            .padding(0)
         }
     }
     
