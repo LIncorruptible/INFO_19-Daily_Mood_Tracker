@@ -20,123 +20,180 @@ struct DashboardView: View {
     @State private var suggestedActivities: [Activity] = [] // Activités suggérées
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                // Nom d'utilisateur en haut de la vue
-                HStack {
-                    Text("Bienvenue, \(userSession.currentUser?.username ?? "Utilisateur")!")
-                        .font(.title2)
-                        .bold()
-                        .padding(.leading)
-                    
-                    Spacer()
-                }
-                .padding(.top)
-                
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        // MARK: - Humeur actuelle
-                        if let mood = currentMood {
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("Humeur actuelle")
-                                    .font(.headline)
-                                
-                                Text(mood.name) // Affiche uniquement le nom de l'humeur
-                                    .font(.subheadline)
-                                    .bold()
-                            }
-                            .padding(.top, 10)
-                        } else {
-                            Text("Aucune humeur actuelle définie.")
-                                .font(.headline)
-                                .padding(.top, 10)
-                        }
-                        
-                        Divider()
-                        
-                        // MARK: - Citation aléatoire
-                        if let quote = quoteOfTheDay {
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("Citation du jour")
-                                    .font(.headline)
-                                
-                                Text("« \(quote.frenchText) »") // Utilise la version française
-                                    .italic()
-                                    .font(.body)
-                                
-                                Text("- \(quote.author)")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                            }
-                            .padding(.top, 10)
-                        } else {
-                            Text("Aucune citation disponible pour le moment.")
-                                .font(.headline)
-                                .padding(.top, 10)
-                        }
-                        
-                        Divider()
-                        
-                        // MARK: - Suggestions d’activités
-                        if !suggestedActivities.isEmpty {
-                            Text("Suggestions d’activités :")
-                                .font(.headline)
-                            
-                            ForEach(suggestedActivities, id: \.id) { activity in
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(activity.frenchTitle)
-                                        .font(.subheadline)
-                                        .bold()
-                                    Text(activity.frenchText)
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                }
-                                .padding(.vertical, 4)
-                            }
-                        } else {
-                            Text("Aucune activité suggérée pour l’humeur actuelle.")
-                                .font(.subheadline)
-                        }
+        GeometryReader { geometry in
+            let isLandscape = geometry.size.width > geometry.size.height
+            
+            NavigationStack {
+                if isLandscape {
+                    // Mode paysage
+                    HStack {
+                        dashboardContent()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Spacer()
                     }
-                    .padding()
-                }
-                
-                Spacer()
-                
-                // MARK: - Barre de navigation en bas
-                HStack(spacing: 20) {
-                    NavigationLink("Humeurs") {
-                        MoodsView() // Redirige vers la vue des humeurs
-                    }
-                    NavigationLink("Journal") {
-                        JournalsView() // Utilisation de la vue du journal
-                    }
-                    NavigationLink("Paramètres") {
-                        // SettingsView() // Redirige vers une vue des paramètres
-                    }
-                }
-                .padding()
-            }
-            .navigationTitle("Tableau de bord")
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        userSession.logout()
-                        dismiss()
-                    }) {
-                        Text("Déconnexion")
-                            .foregroundColor(.red)
+                } else {
+                    // Mode portrait
+                    VStack {
+                        dashboardContent()
                     }
                 }
             }
             .onAppear {
-                // Récupération de la citation
                 getDailyQuote()
                 getActivities()
             }
         }
+    }
+        
+    // Séparez le contenu principal pour le réutiliser dans les deux orientations
+    @ViewBuilder
+    private func dashboardContent() -> some View {
+        if UIDevice.current.orientation.isLandscape {
+            HStack(alignment: .top, spacing: 20) {
+                moodSection()
+                    .frame(maxWidth: .infinity)
+                
+                quoteSection()
+                    .frame(maxWidth: .infinity)
+            }
+            .padding()
+        } else {
+            VStack(alignment: .leading, spacing: 20) {
+                moodSection()
+                
+                Divider()
+                
+                quoteSection()
+                
+                Divider()
+                
+                activitySuggestions()
+            }
+            .padding(.horizontal)
+        }
+    }
+
+    // Section Humeur actuelle
+    @ViewBuilder
+    private func moodSection() -> some View {
+        if let mood = currentMood {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Text("Humeur actuelle")
+                        .font(.headline)
+                        .bold()
+                    
+                    Spacer()
+                    
+                    if let moodImage = mood.image {
+                        Image(moodImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40, height: 40)
+                    }
+                }
+                
+                Text(mood.name)
+                    .font(.title3)
+                    .bold()
+                    .foregroundColor(.primary)
+                    .padding(8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(8)
+            }
+            .padding()
+            .background(Color.blue.opacity(0.05))
+            .cornerRadius(10)
+        } else {
+            Text("Aucune humeur actuelle définie.")
+                .font(.headline)
+                .padding(.top, 10)
+        }
+    }
+
+    // Section Citation du jour
+    @ViewBuilder
+    private func quoteSection() -> some View {
+        if let quote = quoteOfTheDay {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("📜 Citation du jour")
+                    .font(.headline)
+                    .bold()
+                
+                Text("« \(quote.frenchText) »")
+                    .italic()
+                    .font(.body)
+                    .padding(.vertical, 4)
+                
+                Text("- \(quote.author)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            .padding()
+            .background(Color.green.opacity(0.05))
+            .cornerRadius(10)
+        } else {
+            Text("Aucune citation disponible pour le moment.")
+                .font(.headline)
+                .padding(.top, 10)
+        }
+    }
+
+    // Section Suggestions d’activités
+    @ViewBuilder
+    private func activitySuggestions() -> some View {
+        if !suggestedActivities.isEmpty {
+            Text("💡 Suggestions d’activités")
+                .font(.headline)
+                .bold()
+            
+            ForEach(suggestedActivities, id: \.id) { activity in
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(activity.frenchTitle)
+                        .font(.subheadline)
+                        .bold()
+                    
+                    Text(activity.frenchText)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .padding()
+                .background(Color.orange.opacity(0.05))
+                .cornerRadius(10)
+            }
+        } else {
+            Text("Aucune activité suggérée pour l’humeur actuelle.")
+                .font(.subheadline)
+                .padding(.vertical)
+        }
+    }
+
+    // Barre de navigation en bas
+    private func bottomNavigationBar() -> some View {
+        HStack(spacing: 20) {
+            NavigationLink(destination: MoodsView()) {
+                VStack {
+                    Image(systemName: "face.smiling")
+                        .font(.title2)
+                    Text("Humeurs")
+                        .font(.caption)
+                }
+            }
+            
+            NavigationLink(destination: JournalsView()) {
+                VStack {
+                    Image(systemName: "book.closed")
+                        .font(.title2)
+                    Text("Journal")
+                        .font(.caption)
+                }
+            }
+        }
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(12)
     }
     
     private func getDailyQuote() {
@@ -173,7 +230,7 @@ struct DashboardView: View {
                         suggestedActivities = []
                     }
                 }
-            } else {                
+            } else {
                 currentMood = nil
                 suggestedActivities = []
             }
