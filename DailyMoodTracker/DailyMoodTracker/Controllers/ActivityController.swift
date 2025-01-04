@@ -50,7 +50,7 @@ class ActivityController {
         let fetchDescriptor = FetchDescriptor<Activity>()
         do {
             var activities = try context.fetch(fetchDescriptor)
-            activities = activities.filter { $0.minMoodLevel >= minLevel && $0.maxMoodLevel <= maxLevel }
+            activities = activities.filter { $0.minMoodLevel <= minLevel && $0.maxMoodLevel >= maxLevel }
             activities.shuffle()
             return Array(activities.prefix(howMany))
         } catch {
