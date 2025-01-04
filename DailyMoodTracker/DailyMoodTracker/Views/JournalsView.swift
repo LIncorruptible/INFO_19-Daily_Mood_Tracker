@@ -8,20 +8,22 @@
 import SwiftUI
 import SwiftData
 
-enum JournalFormMode {
+enum JournalFormMode: Equatable {
     case add
     case edit(Journal)
 }
 
 struct JournalsView: View {
-
+    
+    @Binding var shouldRefresh: Bool
+    
     // MARK: - Journaux
     @State private var journals: [Journal] = []
     @Environment(\.modelContext) private var context: ModelContext
     @State private var controller: JournalController?
     @ObservedObject private var userSession = UserSession.shared
     
-    // Mark: - Formulaire d'ajout/modification
+    // MARK: - Formulaire d'ajout/modification
     @State private var showForm: Bool = false
     @State private var formMode: JournalFormMode = .add
     
@@ -31,54 +33,71 @@ struct JournalsView: View {
     @State private var formMood: Mood? = nil
     
     var body: some View {
-        NavigationView {
-            VStack {
-                if journals.isEmpty {
-                    Text("Aucun journal pour le moment.")
-                        .foregroundColor(.secondary)
-                        .padding()
-                } else {
-                    JournalsList(
-                        journals: journals,
-                        onEdit: { journal in setupEditForm(with: journal) },
-                        onDelete: { journal in
-                            do {
-                                try controller!.deleteById(byId: journal.id)
-                                fetchJournals()
-                            } catch {
-                                handleError(error)
-                            }
+        NavigationStack {
+            ZStack {
+                VStack {
+                    if journals.isEmpty {
+                        // Message d'absence de journaux
+                        VStack(spacing: 16) {
+                            Image(systemName: "tray")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80, height: 80)
+                                .foregroundColor(.gray)
+                            Text("Aucun journal pour le moment.")
+                                .font(.headline)
+                                .foregroundColor(.secondary)
                         }
-                    )
+                        .padding()
+                    } else {
+                        // Liste des journaux
+                        ScrollView {
+                            VStack(spacing: 16) {
+                                ForEach(journals, id: \.id) { journal in
+                                    JournalCard(
+                                        journal: journal,
+                                        onEdit: { journal in setupEditForm(with: journal) },
+                                        onDelete: { journal in
+                                            do {
+                                                try controller!.deleteById(byId: journal.id)
+                                                fetchJournals()
+                                            } catch {
+                                                handleError(error)
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+                            .padding()
+                        }
+                    }
                 }
-                
-                // Bouton pour ajouter un journal
-                Button {
-                    setupAddForm()
-                } label: {
-                    Image(systemName: "plus")
-                    Text("Ajouter un journal")
-                        .bold()
+                .navigationTitle("📝 Journal")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: setupAddForm) {
+                            Image(systemName: "plus")
+                                .font(.title2)
+                        }
+                    }
                 }
-                .buttonStyle(.borderedProminent)
-                .padding(.vertical, 8)
-                
-                Spacer()
-            }
-            .navigationTitle("Journaux")
-            .onAppear {
-                controller = JournalController(context: context)
-                fetchJournals()
-            }
-            .sheet(isPresented: $showForm) {
-                JournalForm(
-                    mode: formMode,
-                    date: $formDate,
-                    notes: $formNotes,
-                    mood: $formMood,
-                    controller: MoodController(context: context)
-                ) {
-                    performSave()
+                .onAppear {
+                    controller = JournalController(context: context)
+                    fetchJournals()
+                }
+                .onDisappear() {
+                    shouldRefresh.toggle()
+                }
+                .sheet(isPresented: $showForm) {
+                    JournalForm(
+                        mode: formMode,
+                        date: $formDate,
+                        notes: $formNotes,
+                        mood: $formMood,
+                        controller: MoodController(context: context)
+                    ) {
+                        performSave()
+                    }
                 }
             }
         }
@@ -105,7 +124,6 @@ struct JournalsView: View {
     // MARK: - Enregistre les données selon le mode
     private func performSave() {
         do {
-            
             let userController = UserController(context: context)
             let user = try userController.getById(byId: userSession.currentUser!.id)
             
@@ -139,10 +157,11 @@ struct JournalsView: View {
         print("Une erreur est survenue : \(error.localizedDescription)")
     }
     
-    // MARK: - Récupération des humeurs personnalisées
+    // MARK: - Récupération des journaux
     private func fetchJournals() {
         do {
             journals = try controller!.getAllByUser(byUser: userSession.currentUser!)
+            journals.sort { $0.date > $1.date }
         } catch {
             handleError(error)
         }

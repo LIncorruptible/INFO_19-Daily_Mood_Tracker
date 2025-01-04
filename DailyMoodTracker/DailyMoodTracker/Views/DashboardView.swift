@@ -14,63 +14,68 @@ struct DashboardView: View {
     @ObservedObject private var userSession = UserSession.shared
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context: ModelContext
-    
+            
     @State private var quoteOfTheDay: Quote?
     @State private var currentMood: Mood?
     @State private var suggestedActivities: [Activity] = []
     
+    @State private var shouldRefresh: Bool = false
+    
     var body: some View {
-        GeometryReader { geometry in
-            let isLandscape = geometry.size.width > geometry.size.height
+        NavigationStack {
+            verticalDashboard()
+        }
+        .onAppear {
+            refreshView()
+        }
+        .onChange(of: shouldRefresh) { _ in
+            refreshView()
+        }
+    }
+    
+    @ViewBuilder
+    private func verticalDashboard() -> some View {
+        VStack(alignment: .leading, spacing: 20) {
+            // Section bienvenue
+            HStack {
+                Text("👋 Bienvenue, \(userSession.currentUser?.username ?? "Utilisateur")!")
+                    .font(.largeTitle)
+                    .bold()
+                Spacer()
+            }
+            .padding([.top, .horizontal])
             
-            NavigationStack {
-                VStack(alignment: .leading, spacing: 20) {
-                    // Section bienvenue
-                    HStack {
-                        Text("👋 Bienvenue, \(userSession.currentUser?.username ?? "Utilisateur")!")
-                            .font(.largeTitle)
-                            .bold()
-                        Spacer()
-                    }
-                    .padding([.top, .horizontal])
-                    
-                    // Section Humeur actuelle
-                    moodSection()
-                        .padding(.horizontal)
-                    
-                    Divider()
-                        .padding(.horizontal)
-                    
-                    // Section Citation du jour
-                    quoteSection()
-                        .padding(.horizontal)
-                    
-                    Divider()
-                        .padding(.horizontal)
-                    
-                    // Section défilante pour les suggestions d’activités
-                    Text("💡 Suggestions d’activités")
-                        .font(.headline)
-                        .bold()
-                        .padding(.horizontal)
-                    
-                    ScrollView {
-                        activitySuggestions()
-                            .padding(.horizontal)
-                    }
-                    .frame(maxHeight: .infinity)
-                    
-                    Spacer()
-                    
-                    // Barre de navigation en bas
-                    bottomNavigationBar()
-                        .padding(.horizontal)
-                }
+            // Section Humeur actuelle
+            moodSection()
+                .padding(.horizontal)
+            
+            Divider()
+                .padding(.horizontal)
+            
+            // Section Citation du jour
+            quoteSection()
+                .padding(.horizontal)
+            
+            Divider()
+                .padding(.horizontal)
+            
+            // Section défilante pour les suggestions d’activités
+            Text("💡 Suggestions d’activités")
+                .font(.headline)
+                .bold()
+                .padding(.horizontal)
+            
+            ScrollView {
+                activitySuggestions()
+                    .padding(.horizontal)
             }
-            .onAppear {
-                getDailyQuote()
-                getActivities()
-            }
+            .frame(maxHeight: .infinity)
+            
+            Spacer()
+            
+            // Barre de navigation en bas
+            bottomNavigationBar()
+                .padding(.horizontal)
         }
     }
     
@@ -182,7 +187,7 @@ struct DashboardView: View {
                 }
             }
             
-            NavigationLink(destination: JournalsView()) {
+            NavigationLink(destination: JournalsView(shouldRefresh: $shouldRefresh)) {
                 VStack {
                     Image(systemName: "book.closed")
                         .font(.title2)
@@ -205,6 +210,11 @@ struct DashboardView: View {
         .padding()
         .background(Color(.systemGray6))
         .cornerRadius(12)
+    }
+    
+    private func refreshView() {
+        getDailyQuote()
+        getActivities()
     }
     
     private func getDailyQuote() {
