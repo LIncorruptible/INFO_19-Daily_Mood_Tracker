@@ -25,6 +25,10 @@ struct MoodsView: View {
     @State private var formLevel: Int = 5
     @State private var formImageData: Data? = nil
 
+    // États pour gérer les alertes d'erreur
+    @State private var showErrorAlert: Bool = false
+    @State private var errorMessage: String = ""
+
     var body: some View {
         NavigationView {
             VStack {
@@ -85,6 +89,11 @@ struct MoodsView: View {
                     performSave()
                 }
             }
+            .alert("Erreur", isPresented: $showErrorAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(errorMessage)
+            }
         }
     }
 
@@ -139,7 +148,19 @@ struct MoodsView: View {
 
     // MARK: - Gestion des erreurs
     private func handleError(_ error: Error) {
-        print("Une erreur est survenue : \(error.localizedDescription)")
+        if let moodError = error as? MoodError {
+            switch moodError {
+            case .isDefaultMood(let message),
+                 .alreadyExists(let message),
+                 .creatingADuplicate(let message):
+                errorMessage = message
+            default:
+                errorMessage = "Une erreur inattendue est survenue : \(moodError.localizedDescription)"
+            }
+        } else {
+            errorMessage = "Une erreur inconnue est survenue : \(error.localizedDescription)"
+        }
+        showErrorAlert = true
     }
 
     // MARK: - Récupération des humeurs personnalisées
