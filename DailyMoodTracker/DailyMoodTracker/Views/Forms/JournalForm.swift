@@ -92,7 +92,7 @@ struct JournalForm: View {
             }
             .onAppear {
                 fetchMoods()
-                selectedMood = moods.randomElement()
+                selectedMood = mood ?? moods.randomElement()
             }
         }
     }
