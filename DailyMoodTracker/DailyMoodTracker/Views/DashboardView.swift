@@ -134,31 +134,7 @@ struct DashboardView: View {
             .onAppear {
                 // Récupération de la citation
                 getDailyQuote()
-                
-                // Récupération de l'humeur actuelle
-                if let currentUser = userSession.currentUser {
-                    if let latestJournal = try? JournalController(context: context).getLatestByUser(byUser: currentUser) {
-                        currentMood = latestJournal.mood
-                        
-                        // Suggestions d'activités basées sur l'humeur
-                        if let mood = currentMood {
-                            do {
-                                let activityController = ActivityController(context: context)
-                                suggestedActivities = try activityController.getManyRandomly(
-                                    howMany: 5,
-                                    minLevel: mood.level,
-                                    maxLevel: mood.level
-                                )
-                            } catch {
-                                print("Erreur lors de la récupération des activités : \(error.localizedDescription)")
-                                suggestedActivities = []
-                            }
-                        }
-                    } else {
-                        currentMood = nil
-                        suggestedActivities = []
-                    }
-                }
+                getActivities()
             }
         }
     }
@@ -174,6 +150,33 @@ struct DashboardView: View {
         } else {
             quoteOfTheDay = quotes.randomElement()
             userSession.updateQuote(quoteUUID: quoteOfTheDay?.id ?? UUID())
+        }
+    }
+    
+    private func getActivities() {
+        // Récupération de l'humeur actuelle
+        if let currentUser = userSession.currentUser {
+            if let latestJournal = try? JournalController(context: context).getLatestByUser(byUser: currentUser) {
+                currentMood = latestJournal.mood
+                
+                // Suggestions d'activités basées sur l'humeur
+                if let mood = currentMood {
+                    do {
+                        let activityController = ActivityController(context: context)
+                        suggestedActivities = try activityController.getManyRandomly(
+                            howMany: 5,
+                            minLevel: mood.level,
+                            maxLevel: mood.level
+                        )
+                    } catch {
+                        print("Erreur lors de la récupération des activités : \(error.localizedDescription)")
+                        suggestedActivities = []
+                    }
+                }
+            } else {                
+                currentMood = nil
+                suggestedActivities = []
+            }
         }
     }
 }

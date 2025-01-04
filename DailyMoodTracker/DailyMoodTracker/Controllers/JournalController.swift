@@ -59,7 +59,7 @@ class JournalController {
     // Récupération du dernier journal d'un utilisateur spécifique
     func getLatestByUser(byUser user: User) throws -> Journal? {
         let fetchDescriptor = FetchDescriptor<Journal>(
-            predicate: #Predicate { $0.user == user },
+            predicate: #Predicate { $0.user.id == user.id },
             sortBy: [SortDescriptor(\.date, order: .reverse)]
         )
         do {
@@ -69,6 +69,10 @@ class JournalController {
             throw JournalError.fetchFailed("Erreur lors de la récupération du dernier journal de l'utilisateur : \(error.localizedDescription)")
         }
     }
+    
+    // Mark: - getByUserId
+    // Récupération de tous les journaux d'un utilisateur spécifique par son ID
+    
     
     // MARK: - deleteAll
     // Suppression de tous les journaux
