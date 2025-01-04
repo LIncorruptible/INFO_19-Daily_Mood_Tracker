@@ -22,9 +22,9 @@ struct SettingsView: View {
             Form {
                 // Section : Compte
                 Section(header: Text("Compte")) {
-                    Button(action: editAccount) {
-                        Label("Éditer mon compte", systemImage: "person.crop.circle")
-                    }
+                    
+                    NavigationLink("Mon compte", destination: AccountView(localUser: userSession.currentUser!))
+                    
                     Button(action: logout) {
                         Label("Se déconnecter", systemImage: "rectangle.portrait.and.arrow.right")
                             .foregroundColor(.red)
@@ -56,11 +56,6 @@ struct SettingsView: View {
     }
     
     // Actions
-    
-    private func editAccount() {
-        // Action pour éditer le compte
-        print("Éditer le compte")
-    }
     
     private func toggleTheme(_ isDarkMode: Bool) {
         // Action pour changer le thème de l'application

@@ -38,6 +38,26 @@ class SignUpController : UserController {
         // Enregistrement
         try create(user: newUser)
     }
+    
+    // MARK: - editAccount
+    // Fonction pour modifier un compte existant
+    func editAccount(user: User, newUsername: String, newEmail: String) throws {
+        // Validation des champs
+        guard !newUsername.isEmpty else { throw EditAccountError.emptyUsername }
+        guard newEmail.isValidEmail else { throw EditAccountError.invalidEmail }
+        
+        // Vérifier si l'email existe déjà et n'appartient pas à l'utilisateur actuel
+        let fetchDescriptor = FetchDescriptor<User>(predicate: #Predicate { $0.email == newEmail })
+        
+        if let existingUser = try context.fetch(fetchDescriptor).first {
+            guard existingUser.id == user.id else { throw EditAccountError.emailAlreadyTaken }
+        }
+
+        // Mise à jour des informations
+        user.username = newUsername
+        user.email = newEmail
+        try context.save()
+    }
 }
 
 // MARK: - SignUpError
@@ -60,9 +80,26 @@ enum SignUpError: Error, LocalizedError {
     }
 }
 
+// MARK: - EditAccountError
+// Enum pour les erreurs de modification de compte
+enum EditAccountError: Error, LocalizedError {
+    case emptyUsername
+    case invalidEmail
+    case emailAlreadyTaken
+
+    var errorDescription: String? {
+        switch self {
+        case .emptyUsername: return "Le nom d'utilisateur est requis."
+        case .invalidEmail: return "L'adresse email n'est pas valide."
+        case .emailAlreadyTaken: return "Cet email est déjà utilisé."
+        }
+    }
+}
+
 // MARK: - Extensions
 // Extensions pour les validations
 extension String {
+    
     var isValidEmail: Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: self)
