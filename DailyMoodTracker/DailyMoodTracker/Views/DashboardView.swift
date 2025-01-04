@@ -191,6 +191,15 @@ struct DashboardView: View {
                 }
             }
             
+            NavigationLink(destination: SettingsView()) {
+                VStack {
+                    Image(systemName: "gearshape")
+                        .font(.title2)
+                    Text("Paramètres")
+                        .font(.caption)
+                }
+            }
+            
             Spacer() // Ajout d'un Spacer à droite
         }
         .padding()

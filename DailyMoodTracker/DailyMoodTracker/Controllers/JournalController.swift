@@ -47,7 +47,7 @@ class JournalController {
     // MARK: - getAllByUser
     // Récupération de tous les journaux d'un utilisateur spécifique
     func getAllByUser(byUser user: User) throws -> [Journal] {
-        let fetchDescriptor = FetchDescriptor<Journal>(predicate: #Predicate { $0.user == user })
+        let fetchDescriptor = FetchDescriptor<Journal>(predicate: #Predicate { $0.user.id == user.id })
         do {
             return try context.fetch(fetchDescriptor)
         } catch {

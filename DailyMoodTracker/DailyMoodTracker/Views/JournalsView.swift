@@ -142,7 +142,7 @@ struct JournalsView: View {
     // MARK: - Récupération des humeurs personnalisées
     private func fetchJournals() {
         do {
-            journals = try controller!.getAll()
+            journals = try controller!.getAllByUser(byUser: userSession.currentUser!)
         } catch {
             handleError(error)
         }
