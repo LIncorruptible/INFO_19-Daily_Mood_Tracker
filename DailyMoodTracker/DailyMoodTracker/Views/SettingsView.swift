@@ -58,8 +58,11 @@ struct SettingsView: View {
     // Actions
     
     private func toggleTheme(_ isDarkMode: Bool) {
-        // Action pour changer le thème de l'application
-        print("Thème sombre activé : \(isDarkMode)")
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            windowScene.windows.forEach { window in
+                window.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+            }
+        }
     }
     
     private func logout() {
