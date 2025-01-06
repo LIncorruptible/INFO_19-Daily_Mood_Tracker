@@ -45,15 +45,19 @@ struct DashboardView: View {
     }
     
     private func detectOrientation() {
-        isLandscape = UIDevice.current.orientation.isLandscape
+        let orientation = UIDevice.current.orientation
+        DispatchQueue.main.async {
+            self.isLandscape = orientation.isValidInterfaceOrientation ? orientation.isLandscape : UIScreen.main.bounds.width > UIScreen.main.bounds.height
+        }
     }
     
+    // MARK: - verticalDashboard
     @ViewBuilder
     private func verticalDashboard() -> some View {
         VStack(alignment: .leading, spacing: 20) {
             // Section bienvenue
             HStack {
-                Text("👋 Bienvenue, \(userSession.currentUser?.username ?? "Utilisateur")!")
+                Text(getGreetings())
                     .font(.largeTitle)
                     .bold()
                 Spacer()
@@ -94,6 +98,7 @@ struct DashboardView: View {
         }
     }
     
+    // MARK: - horizontalDashboard
     @ViewBuilder
     private func horizontalDashboard() -> some View {
         HStack() {
@@ -103,7 +108,7 @@ struct DashboardView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         // Section bienvenue
                         HStack {
-                            Text("👋 Bienvenue, \(userSession.currentUser?.username ?? "Utilisateur")!")
+                            Text(getGreetings())
                                 .font(.largeTitle)
                                 .bold()
                             Spacer()
@@ -147,6 +152,9 @@ struct DashboardView: View {
         }
     }
     
+    // MARK: - Sections
+    
+    // MARK: - moodSection
     // Section Humeur actuelle
     @ViewBuilder
     private func moodSection() -> some View {
@@ -186,6 +194,7 @@ struct DashboardView: View {
         }
     }
 
+    // MARK: - quoteSection
     // Section Citation du jour
     @ViewBuilder
     private func quoteSection() -> some View {
@@ -215,6 +224,7 @@ struct DashboardView: View {
         }
     }
 
+    // MARK: - activitySuggestions
     // Section Suggestions d’activités
     @ViewBuilder
     private func activitySuggestions() -> some View {
@@ -242,6 +252,7 @@ struct DashboardView: View {
         }
     }
     
+    // MARK: - bottomNavigationBar
     private func bottomNavigationBar() -> some View {
         HStack(spacing: 20) {
             Spacer() // Ajout d'un Spacer à gauche
@@ -280,11 +291,13 @@ struct DashboardView: View {
         .cornerRadius(12)
     }
     
+    // MARK: - refreshView
     private func refreshView() {
         getDailyQuote()
         getActivities()
     }
     
+    // MARK: - getDailyQuote
     private func getDailyQuote() {
         if Calendar.current.isDateInToday(userSession.lastQuoteDateChanged) {
             if let currentQuoteUUID = userSession.currentQuoteUUID {
@@ -298,7 +311,7 @@ struct DashboardView: View {
             userSession.updateQuote(quoteUUID: quoteOfTheDay?.id ?? UUID())
         }
     }
-    
+    // MARK: - getActivities
     private func getActivities() {
         if let currentUser = userSession.currentUser {
             if let latestJournal = try? JournalController(context: context).getLatestByUser(byUser: currentUser) {
@@ -321,6 +334,22 @@ struct DashboardView: View {
                 currentMood = nil
                 suggestedActivities = []
             }
+        }
+    }
+    
+    // MARK: - GetGreetings
+    private func getGreetings() -> String {
+        if let currentUser = userSession.currentUser {
+            let hour = Calendar.current.component(.hour, from: Date())
+            if hour >= 5 && hour < 12 {
+                return "👋 Bonjour, \(currentUser.username) !"
+            } else if hour >= 12 && hour < 18 {
+                return "👋 Bon après-midi, \(currentUser.username) !"
+            } else {
+                return "👋 Bonsoir, \(currentUser.username) !"
+            }
+        } else {
+            return "🌐 Non Connecté"
         }
     }
 }

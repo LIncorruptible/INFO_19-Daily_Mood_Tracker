@@ -105,8 +105,8 @@ struct MoodForm: View {
 
     private var title: String {
         switch mode {
-        case .add: return "Nouvelle humeur"
-        case .edit: return "Modifier l’humeur"
+            case .add: return "Nouvelle humeur"
+            case .edit: return "Modifier l’humeur"
         }
     }
 

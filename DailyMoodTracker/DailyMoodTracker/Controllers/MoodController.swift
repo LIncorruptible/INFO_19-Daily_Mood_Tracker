@@ -1,6 +1,16 @@
+//
+//  MoodController.swift
+//  DailyMoodTracker
+//
+//  Created by etudiant on 29/12/2024.
+//
+
 import SwiftData
 import SwiftUI
 
+// MARK: - MoodController
+// Classe pour la gestion des humeurs
+// Implémente ObservableObject pour la liaison avec SwiftUI
 class MoodController: ObservableObject {
     
     // MARK: - Context
@@ -68,6 +78,10 @@ class MoodController: ObservableObject {
         
         guard !isDefaultMood(mood) else {
             throw MoodError.deletionFailed("Impossible de supprimer une humeur par défaut.")
+        }
+        
+        guard !hasJournals(mood: mood) else {
+            throw MoodError.hasJournals("Impossible de supprimer une humeur utilisée dans un ou plusieurs journaux.")
         }
         
         context.delete(mood)
@@ -167,6 +181,18 @@ class MoodController: ObservableObject {
         }
     }
     
+    // MARK: - hasJournals
+    // Vérifie si une humeur est utilisée dans un ou plusieurs journaux
+    func hasJournals(mood: Mood) -> Bool {
+        let journalController = JournalController(context: context)
+        do {
+            let journals = try journalController.getAll()
+            return journals.contains(where: { $0.mood == mood })
+        } catch {
+            return false
+        }
+    }
+    
     // MARK: - creatingADuplicate
     // Vérifie si une humeur créée un doublon (par défaut ou personnalisée) en ignorant un ID spécifique
     func creatingADuplicate(name: String, ignoredId: UUID) -> Bool {
@@ -196,6 +222,7 @@ enum MoodError: Error, LocalizedError {
     case saveFailed(String)
     case isDefaultMood(String)
     case alreadyExists(String)
+    case hasJournals(String)
     case creatingADuplicate(String)
 
     var errorDescription: String? {
@@ -211,6 +238,8 @@ enum MoodError: Error, LocalizedError {
         case .isDefaultMood(let message):
             return message
         case .alreadyExists(let message):
+            return message
+        case .hasJournals(let message):
             return message
         case .creatingADuplicate(let message):
             return message

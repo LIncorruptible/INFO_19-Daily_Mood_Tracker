@@ -10,7 +10,7 @@ import SwiftData
 
 enum JournalFormMode: Equatable {
     case add
-    case edit(Journal)
+    case edit
 }
 
 struct JournalsView: View {
@@ -90,7 +90,7 @@ struct JournalsView: View {
                 }
                 .sheet(isPresented: $showForm) {
                     JournalForm(
-                        mode: formMode,
+                        mode: $formMode,
                         date: $formDate,
                         notes: $formNotes,
                         mood: $formMood,
@@ -114,7 +114,7 @@ struct JournalsView: View {
     
     // MARK: - Prépare le formulaire pour l'édition
     private func setupEditForm(with journal: Journal) {
-        formMode = .edit(journal)
+        formMode = JournalFormMode.edit
         formDate = journal.date
         formNotes = journal.notes
         formMood = journal.mood

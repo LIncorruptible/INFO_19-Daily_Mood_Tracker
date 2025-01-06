@@ -9,6 +9,9 @@
 import Foundation
 import SwiftData
 
+// MARK: - LoginController
+// Classe pour la gestion de la connexion des utilisateurs
+// Hérite de UserController
 class LoginController: UserController {
     
     // MARK: - Constructeur

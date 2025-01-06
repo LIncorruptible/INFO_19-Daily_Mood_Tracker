@@ -8,6 +8,8 @@
 import Foundation
 import SwiftData
 
+// MARK: - ActivityController
+// Classe pour la gestion des activités
 class ActivityController {
     
     // MARK: - Context

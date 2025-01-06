@@ -19,7 +19,7 @@ struct JournalCard: View {
             if let mood = journal.mood {
                 ZStack {
                     Circle()
-                        .fill(Color.blue.opacity(0.2)) // Cercle coloré en arrière-plan
+                        .fill(Color.gray.opacity(0.1)) // Cercle coloré en arrière-plan
                         .frame(width: 50, height: 50)
                     
                     if let moodImage = mood.image {
@@ -34,6 +34,16 @@ struct JournalCard: View {
                             .frame(width: 32, height: 32)
                             .foregroundColor(.gray)
                     }
+                    
+                    // Son nom
+                    Text(mood.name)
+                        .font(.caption)
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
+                        .padding(4)
+                        .background(Color.blue.opacity(0.1))
+                        .clipShape(Capsule())
+                        .offset(x: 0, y: 20)
                 }
             }
 
@@ -52,15 +62,9 @@ struct JournalCard: View {
             Spacer()
         }
         .padding()
-        .background(
-            LinearGradient(
-                gradient: Gradient(colors: [Color.white, Color(.systemGray6)]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-        )
-        .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+        .background(Color(.systemBackground))
+        .cornerRadius(8)
+        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
         .overlay(
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)

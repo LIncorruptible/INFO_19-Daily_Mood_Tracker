@@ -20,6 +20,7 @@ class Activity {
     var minMoodLevel: Int
     var maxMoodLevel: Int
 
+    // MARK: - Constructeur par défaut
     init(id: UUID = UUID(), frenchTitle: String, englishTitle: String, frenchText: String, englishText: String, completionTimes: Int, minMoodLevel: Int, maxMoodLevel: Int) {
         self.id = id
         self.frenchTitle = frenchTitle

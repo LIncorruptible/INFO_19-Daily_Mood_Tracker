@@ -5,7 +5,6 @@
 //  Created by etudiant on 10/12/2024.
 //
 
-
 import Foundation
 import SwiftData
 
@@ -17,6 +16,7 @@ class Quote {
     var frenchText: String
     var englishText: String
 
+    // MARK: - Construct
     init(id: UUID = UUID(), title: String, author: String, frenchText: String, englishText: String) {
         self.id = id
         self.title = title
