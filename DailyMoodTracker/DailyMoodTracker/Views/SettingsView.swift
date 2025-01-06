@@ -22,7 +22,10 @@ struct SettingsView: View {
             Form {
                 // Section : Compte
                 Section(header: Text("Compte")) {
-                    NavigationLink(destination: AccountView(localUser: userSession.currentUser!)) {
+                    NavigationLink(destination: AccountView(
+                        localUser: userSession.currentUser ??
+                        User(username: "", email: "", password: "")
+                    )) {
                         Label("Mon compte", systemImage: "person.crop.circle")
                     }
                     
