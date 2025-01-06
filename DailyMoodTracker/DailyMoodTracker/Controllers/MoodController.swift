@@ -23,12 +23,17 @@ class MoodController: ObservableObject {
     
     // MARK: - getAll
     // Récupération de tous les humeurs
-    func getAll(withoutDefault: Bool = false) throws -> [Mood] {
+    func getAll(withoutDefault: Bool = false, userId: UUID? = nil) throws -> [Mood] {
         let fetchDescriptor = FetchDescriptor<Mood>()
         do {
             var moods = try context.fetch(fetchDescriptor)
             if withoutDefault {
                 moods = moods.filter { !isDefaultMood($0) }
+                
+                // Si un ID utilisateur est spécifié, filtre pour cet utilisateur
+                if let userId = userId {
+                    moods = moods.filter { $0.userId == userId }
+                }
             }
             return moods
         } catch {
@@ -100,7 +105,7 @@ class MoodController: ObservableObject {
             throw MoodError.saveFailed("Impossible de créer une humeur par défaut.")
         }
         
-        guard !alreadyExists(name: mood.name) else {
+        guard !alreadyExists(name: mood.name, userId: mood.userId) else {
             throw MoodError.alreadyExists("Une humeur avec le nom '\(mood.name)' existe déjà.")
         }
         
@@ -138,7 +143,7 @@ class MoodController: ObservableObject {
             throw MoodError.isDefaultMood("Impossible de modifier une humeur par défaut.")
         }
         
-        guard !creatingADuplicate(name: mood.name, ignoredId: mood.id) else {
+        guard !creatingADuplicate(name: mood.name, ignoredId: mood.id, userId: mood.userId) else {
             throw MoodError.creatingADuplicate("Une humeur avec le nom '\(mood.name)' existe déjà.")
         }
         
@@ -164,7 +169,7 @@ class MoodController: ObservableObject {
     
     // MARK: - alreadyExists
     // Vérifie si une humeur existe déjà (par défaut ou personnalisée)
-    func alreadyExists(name: String) -> Bool {
+    func alreadyExists(name: String, userId: UUID? = nil) -> Bool {
         // Vérifie d'abord dans les humeurs par défaut
         if DefaultMoods.all.contains(where: { $0.name == name }) {
             return true
@@ -174,7 +179,12 @@ class MoodController: ObservableObject {
         let fetchDescriptor = FetchDescriptor<Mood>(predicate: #Predicate { $0.name == name })
         do {
             let moods = try context.fetch(fetchDescriptor)
-            return !moods.isEmpty
+            // Si un ID utilisateur est spécifié, vérifie pour cet utilisateur
+            if let userId = userId {
+                return moods.contains(where: { $0.userId == userId })
+            } else {
+                return !moods.isEmpty
+            }
         } catch {
             // En cas d'erreur de récupération, suppose que le nom existe pour éviter les doublons
             return true
@@ -195,7 +205,7 @@ class MoodController: ObservableObject {
     
     // MARK: - creatingADuplicate
     // Vérifie si une humeur créée un doublon (par défaut ou personnalisée) en ignorant un ID spécifique
-    func creatingADuplicate(name: String, ignoredId: UUID) -> Bool {
+    func creatingADuplicate(name: String, ignoredId: UUID, userId: UUID? = nil) -> Bool {
         // Vérifie d'abord dans les humeurs par défaut
         if DefaultMoods.all.contains(where: { $0.name == name && $0.id != ignoredId }) {
             return true
@@ -205,7 +215,13 @@ class MoodController: ObservableObject {
         let fetchDescriptor = FetchDescriptor<Mood>(predicate: #Predicate { $0.name == name && $0.id != ignoredId })
         do {
             let moods = try context.fetch(fetchDescriptor)
-            return !moods.isEmpty
+            
+            // Si un ID utilisateur est spécifié, vérifie pour cet utilisateur
+            if let userId = userId {
+                return moods.contains(where: { $0.userId == userId })
+            } else {
+                return !moods.isEmpty
+            }
         } catch {
             // En cas d'erreur de récupération, suppose que le nom existe pour éviter les doublons
             return true

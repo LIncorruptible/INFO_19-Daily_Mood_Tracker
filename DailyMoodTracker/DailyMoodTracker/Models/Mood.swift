@@ -20,6 +20,8 @@ class Mood: Identifiable, Hashable {
     
     // Données binaires si l’utilisateur a importé une photo
     var userImageData: Data?
+    
+    var userId: UUID?
 
     // MARK: - Constructeur par défaut
     init(
@@ -28,7 +30,8 @@ class Mood: Identifiable, Hashable {
         text: String,
         level: Int,
         image: String? = nil,
-        userImageData: Data? = nil
+        userImageData: Data? = nil,
+        userId: UUID? = nil
     ) {
         self.id = id
         self.name = name
@@ -36,6 +39,7 @@ class Mood: Identifiable, Hashable {
         self.level = level
         self.image = image
         self.userImageData = userImageData
+        self.userId = userId
     }
     
     // MARK: - Hash
