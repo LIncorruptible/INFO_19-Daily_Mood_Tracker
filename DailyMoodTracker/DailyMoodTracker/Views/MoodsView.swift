@@ -21,6 +21,7 @@ struct MoodsView: View {
     @State private var customMoods: [Mood] = []
     @Environment(\.modelContext) private var context
     @State private var controller: MoodController?
+    @ObservedObject private var userSession = UserSession.shared
     
     // MARK: - Formulaire d'ajout/modification
     @State private var showForm: Bool = false
@@ -222,7 +223,8 @@ struct MoodsView: View {
                     name: formName,
                     text: formDescription,
                     level: formLevel,
-                    userImageData: formImageData
+                    userImageData: formImageData,
+                    userId: userSession.currentUser?.id
                 )
                 try controller?.create(mood: moodToCreate)
                 
@@ -232,7 +234,8 @@ struct MoodsView: View {
                     name: formName,
                     text: formDescription,
                     level: formLevel,
-                    userImageData: formImageData
+                    userImageData: formImageData,
+                    userId: userSession.currentUser?.id
                 )
                 try controller?.update(mood: moodToUpdate)
             }
@@ -275,7 +278,7 @@ struct MoodsView: View {
     // MARK: - Récupération des humeurs perso
     private func fetchCustomMoods() {
         do {
-            customMoods = try controller?.getAll(withoutDefault: true) ?? []
+            customMoods = try controller?.getAll(withoutDefault: true, userId: userSession.currentUser?.id) ?? []
         } catch {
             handleError(error)
         }
