@@ -11,51 +11,18 @@ struct DefaultMoodsView: View {
     let moods: [Mood]
 
     var body: some View {
-        VStack {
-            Text("Humeurs de base")
-                .font(.headline)
-                .padding(.bottom, 16)
+        VStack(alignment: .leading, spacing: 16) {
+//            Text("Humeurs de base")
+//                .font(.headline)
+//                .padding(.horizontal)
+//                .padding(.top)
 
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 16) {
-                    // Première ligne
-                    HStack(spacing: 16) {
-                        ForEach(moods[0..<3], id: \.id) { mood in
-                            moodCard(mood)
-                        }
-                    }
-                    // Deuxième ligne
-                    HStack(spacing: 16) {
-                        ForEach(moods[3..<5], id: \.id) { mood in
-                            moodCard(mood)
-                        }
-                    }
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                ForEach(moods, id: \.id) { mood in
+                    DefaultMoodCard(mood: mood)
                 }
-                .padding(.horizontal)
-                .padding(.bottom, 10)
             }
+            .padding(.horizontal)
         }
-    }
-
-    private func moodCard(_ mood: Mood) -> some View {
-        VStack(spacing: 4) {
-            if let imageName = mood.image, !imageName.isEmpty {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-            } else {
-                Image(systemName: "questionmark.circle")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(.gray)
-            }
-            Text(mood.name)
-                .font(.caption)
-                .foregroundColor(.primary)
-        }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 12)
     }
 }

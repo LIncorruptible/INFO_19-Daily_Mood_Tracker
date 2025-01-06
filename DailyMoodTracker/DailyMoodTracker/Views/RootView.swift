@@ -22,6 +22,14 @@ struct RootView: View {
         }
         .onAppear {
             initializeData()
+            
+            // Afficher chemin BDD
+            if let databaseURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.appendingPathComponent("DailyMoodTracker.sqlite") {
+                print("Chemin de la base de données : \(databaseURL.path)")
+            } else {
+                print("Impossible de localiser la base de données.")
+            }
+            
         }
     }
 

@@ -31,145 +31,101 @@ struct MoodsView: View {
     
     var body: some View {
         NavigationView {
-            GeometryReader { geometry in
-                // Déterminer l'orientation en fonction des dimensions
-                let isLandscape = geometry.size.width > geometry.size.height
+            
+            VStack(spacing: 20) {
                 
-                ScrollView {
-                    if isLandscape {
-                        // Disposition horizontale pour paysage
-                        HStack(alignment: .top, spacing: 20) {
-                            // Humeurs par Défaut
-                            VStack(alignment: .leading) {
-                                Text("Humeurs par Défaut")
-                                    .font(.headline)
-                                    .padding(.bottom, 5)
-                                
-                                // Assurez-vous que DefaultMoodsView est défini ailleurs dans votre projet
-                                DefaultMoodsView(moods: DefaultMoods.all)
-                            }
-                            .frame(width: geometry.size.width * 0.4)
-                            .padding()
-                            
-                            // Humeurs personnalisées
-                            VStack(alignment: .leading) {
-                                Text("Mes humeurs")
-                                    .font(.headline)
-                                    .padding(.bottom, 5)
-                                
-                                if customMoods.isEmpty {
-                                    Text("Aucune humeur personnalisée pour le moment.")
-                                        .foregroundColor(.secondary)
-                                        .padding()
-                                } else {
-                                    CustomMoodsList(
-                                        moods: customMoods,
-                                        onEdit: { mood in setupEditForm(with: mood) },
-                                        onDelete: { mood in
-                                            do {
-                                                try controller!.deleteById(byId: mood.id)
-                                                fetchCustomMoods()
-                                            } catch {
-                                                handleError(error)
-                                            }
-                                        }
-                                    )
+                Spacer()
+                
+                // Humeurs par Défaut
+                VStack(alignment: .leading) {
+                    Text("Humeurs de base")
+                        .font(.headline)
+                    
+                    Spacer()
+                    
+                    DefaultMoodsView(moods: DefaultMoods.all)
+                }
+                .padding(.horizontal)
+                
+                Spacer()
+                
+                // Humeurs personnalisées
+                VStack(alignment: .leading, spacing: 10) {
+                    
+                    
+                    if !customMoods.isEmpty {
+                        Text("Humeurs personnalisées")
+                            .font(.headline)
+                            .padding(.horizontal)
+                        
+                        Spacer()
+                        
+                        CustomMoodsList(
+                            moods: customMoods,
+                            onEdit: { mood in
+                                setupEditForm(with: mood)
+                            },
+                            onDelete: { mood in
+                                do {
+                                    try controller?.deleteById(byId: mood.id)
+                                    fetchCustomMoods()
+                                } catch {
+                                    handleError(error)
                                 }
-                                
-                                // Bouton pour ajouter une humeur
-                                Button {
-                                    setupAddForm()
-                                } label: {
-                                    Text("Ajouter une nouvelle humeur")
-                                        .bold()
-                                }
-                                .buttonStyle(.borderedProminent)
-                                .padding(.vertical, 8)
-                                
-                                Spacer()
                             }
-                            .frame(width: geometry.size.width * 0.55)
-                            .padding()
-                        }
-                        .frame(width: geometry.size.width, height: geometry.size.height)
+                        )
+                        .padding(.horizontal)
                     } else {
-                        // Disposition verticale pour portrait
-                        VStack(alignment: .leading, spacing: 20) {
-                            // Humeurs par Défaut
-                            VStack(alignment: .leading) {
-
-                                
-                                // Assurez-vous que DefaultMoodsView est défini ailleurs dans votre projet
-                                DefaultMoodsView(moods: DefaultMoods.all)
-                            }
+                        Spacer()
+                        
+                        VStack(spacing: 16) {
+                            Image(systemName: "tray")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80, height: 80)
+                                .foregroundColor(.gray)
                             
-                            Divider()
-                            
-                            // Humeurs personnalisées
-                            VStack(alignment: .leading) {
-                                Text("Mes humeurs")
-                                    .font(.headline)
-                                    .padding(.bottom, 5)
-                                
-                                if customMoods.isEmpty {
-                                    Text("Aucune humeur personnalisée pour le moment.")
-                                        .foregroundColor(.secondary)
-                                        .padding()
-                                } else {
-                                    CustomMoodsList(
-                                        moods: customMoods,
-                                        onEdit: { mood in setupEditForm(with: mood) },
-                                        onDelete: { mood in
-                                            do {
-                                                try controller!.deleteById(byId: mood.id)
-                                                fetchCustomMoods()
-                                            } catch {
-                                                handleError(error)
-                                            }
-                                        }
-                                    )
-                                }
-                                
-                                // Bouton pour ajouter une humeur
-                                Button {
-                                    setupAddForm()
-                                } label: {
-                                    Text("Ajouter une nouvelle humeur")
-                                        .bold()
-                                }
-                                .buttonStyle(.borderedProminent)
-                                .padding(.vertical, 8)
-                                
-                                Spacer()
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding()
+                            Text("Aucune humeur personnalisée pour le moment.")
+                                .font(.headline)
+                                .foregroundColor(.secondary)
                         }
+                        .padding(.horizontal)
+                        
+                        Spacer()
                     }
                 }
-                .padding()
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, 20)
             }
-            .navigationTitle("Gestion des Humeurs")
-            .onAppear {
-                controller = MoodController(context: context)
-                fetchCustomMoods()
-            }
-            .sheet(isPresented: $showForm) {
-                MoodForm(
-                    mode: formMode,
-                    name: $formName,
-                    description: $formDescription,
-                    level: $formLevel,
-                    selectedImageData: $formImageData
-                ) {
-                    performSave()
+        }
+        .navigationTitle("Humeurs")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: setupAddForm) {
+                    Image(systemName: "plus")
+                        .font(.title2)
                 }
             }
-            .alert("Erreur", isPresented: $showErrorAlert) {
-                Button("OK", role: .cancel) { }
-            } message: {
-                Text(errorMessage)
+        }
+        .onAppear {
+            controller = MoodController(context: context)
+            fetchCustomMoods()
+        }
+        .sheet(isPresented: $showForm) {
+            MoodForm(
+                mode: formMode,
+                name: $formName,
+                description: $formDescription,
+                level: $formLevel,
+                selectedImageData: $formImageData
+            ) {
+                performSave()
             }
+        }
+        .alert("Erreur", isPresented: $showErrorAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(errorMessage)
         }
     }
 
@@ -204,7 +160,7 @@ struct MoodsView: View {
                     level: formLevel,
                     userImageData: formImageData
                 )
-                try controller!.create(mood: moodToCreate)
+                try controller?.create(mood: moodToCreate)
             case .edit(let mood):
                 let moodToUpdate: Mood = Mood(
                     id: mood.id,
@@ -213,7 +169,7 @@ struct MoodsView: View {
                     level: formLevel,
                     userImageData: formImageData
                 )
-                try controller!.update(mood: moodToUpdate)
+                try controller?.update(mood: moodToUpdate)
             }
             fetchCustomMoods()
             showForm = false
@@ -242,7 +198,7 @@ struct MoodsView: View {
     // MARK: - Récupération des humeurs personnalisées
     private func fetchCustomMoods() {
         do {
-            customMoods = try controller!.getAll(withoutDefault: true)
+            customMoods = try controller?.getAll(withoutDefault: true) ?? []
         } catch {
             handleError(error)
         }
