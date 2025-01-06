@@ -57,7 +57,7 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: 20) {
             // Section bienvenue
             HStack {
-                Text("👋 Bienvenue, \(userSession.currentUser?.username ?? "Utilisateur")!")
+                Text(getGreetings())
                     .font(.largeTitle)
                     .bold()
                 Spacer()
@@ -108,7 +108,7 @@ struct DashboardView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         // Section bienvenue
                         HStack {
-                            Text("👋 Bienvenue, \(userSession.currentUser?.username ?? "Utilisateur")!")
+                            Text(getGreetings())
                                 .font(.largeTitle)
                                 .bold()
                             Spacer()
@@ -334,6 +334,22 @@ struct DashboardView: View {
                 currentMood = nil
                 suggestedActivities = []
             }
+        }
+    }
+    
+    // MARK: - GetGreetings
+    private func getGreetings() -> String {
+        if let currentUser = userSession.currentUser {
+            let hour = Calendar.current.component(.hour, from: Date())
+            if hour >= 5 && hour < 12 {
+                return "👋 Bonjour, \(currentUser.username) !"
+            } else if hour >= 12 && hour < 18 {
+                return "👋 Bon après-midi, \(currentUser.username) !"
+            } else {
+                return "👋 Bonsoir, \(currentUser.username) !"
+            }
+        } else {
+            return "🌐 Non Connecté"
         }
     }
 }
