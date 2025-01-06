@@ -17,6 +17,7 @@ class Journal {
     @Relationship var mood: Mood?
     @Relationship var user: User
 
+    // MARK: - Constructeur par défaut
     init(id: UUID = UUID(), date: Date, notes: String, mood: Mood, user: User) {
         self.id = id
         self.date = date

@@ -5,10 +5,12 @@
 //  Created by etudiant on 29/12/2024.
 //
 
-
 import Foundation
 import SwiftData
 
+// MARK: - SignUpController
+// Classe pour la gestion de l'inscription et la modification de compte
+// Hérite de UserController
 class SignUpController : UserController {
     
     // MARK: - Constructeur

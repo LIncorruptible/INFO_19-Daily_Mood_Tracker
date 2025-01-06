@@ -22,8 +22,9 @@ struct SettingsView: View {
             Form {
                 // Section : Compte
                 Section(header: Text("Compte")) {
-                    
-                    NavigationLink("Mon compte", destination: AccountView(localUser: userSession.currentUser!))
+                    NavigationLink(destination: AccountView(localUser: userSession.currentUser!)) {
+                        Label("Mon compte", systemImage: "person.crop.circle")
+                    }
                     
                     Button(action: logout) {
                         Label("Se déconnecter", systemImage: "rectangle.portrait.and.arrow.right")
@@ -39,16 +40,32 @@ struct SettingsView: View {
                     .onChange(of: isDarkMode) { value in
                         toggleTheme(value)
                     }
+                    
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.yellow)
+                        Text("Fonctionnalité en développement.")
+                            .font(.footnote)
+                            .foregroundColor(.yellow)
+                    }
                 }
 
                 // Section : Langue
                 Section(header: Text("Langue")) {
-                    Picker("Changer la langue", selection: $selectedLanguage) {
+                    Picker("Changer la langue", systemImage: "globe", selection: $selectedLanguage) {
                         ForEach(languages, id: \.self) { language in
                             Text(language)
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
+                    
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.yellow)
+                        Text("Fonctionnalité en développement.")
+                            .font(.footnote)
+                            .foregroundColor(.yellow)
+                    }
                 }
             }
             .navigationTitle("Paramètres")

@@ -45,9 +45,13 @@ struct DashboardView: View {
     }
     
     private func detectOrientation() {
-        isLandscape = UIDevice.current.orientation.isLandscape
+        let orientation = UIDevice.current.orientation
+        DispatchQueue.main.async {
+            self.isLandscape = orientation.isValidInterfaceOrientation ? orientation.isLandscape : UIScreen.main.bounds.width > UIScreen.main.bounds.height
+        }
     }
     
+    // MARK: - verticalDashboard
     @ViewBuilder
     private func verticalDashboard() -> some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -94,6 +98,7 @@ struct DashboardView: View {
         }
     }
     
+    // MARK: - horizontalDashboard
     @ViewBuilder
     private func horizontalDashboard() -> some View {
         HStack() {
@@ -147,6 +152,9 @@ struct DashboardView: View {
         }
     }
     
+    // MARK: - Sections
+    
+    // MARK: - moodSection
     // Section Humeur actuelle
     @ViewBuilder
     private func moodSection() -> some View {
@@ -186,6 +194,7 @@ struct DashboardView: View {
         }
     }
 
+    // MARK: - quoteSection
     // Section Citation du jour
     @ViewBuilder
     private func quoteSection() -> some View {
@@ -215,6 +224,7 @@ struct DashboardView: View {
         }
     }
 
+    // MARK: - activitySuggestions
     // Section Suggestions d’activités
     @ViewBuilder
     private func activitySuggestions() -> some View {
@@ -242,6 +252,7 @@ struct DashboardView: View {
         }
     }
     
+    // MARK: - bottomNavigationBar
     private func bottomNavigationBar() -> some View {
         HStack(spacing: 20) {
             Spacer() // Ajout d'un Spacer à gauche
@@ -280,11 +291,13 @@ struct DashboardView: View {
         .cornerRadius(12)
     }
     
+    // MARK: - refreshView
     private func refreshView() {
         getDailyQuote()
         getActivities()
     }
     
+    // MARK: - getDailyQuote
     private func getDailyQuote() {
         if Calendar.current.isDateInToday(userSession.lastQuoteDateChanged) {
             if let currentQuoteUUID = userSession.currentQuoteUUID {
@@ -298,7 +311,7 @@ struct DashboardView: View {
             userSession.updateQuote(quoteUUID: quoteOfTheDay?.id ?? UUID())
         }
     }
-    
+    // MARK: - getActivities
     private func getActivities() {
         if let currentUser = userSession.currentUser {
             if let latestJournal = try? JournalController(context: context).getLatestByUser(byUser: currentUser) {

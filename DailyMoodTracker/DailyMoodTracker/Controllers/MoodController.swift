@@ -1,6 +1,16 @@
+//
+//  MoodController.swift
+//  DailyMoodTracker
+//
+//  Created by etudiant on 29/12/2024.
+//
+
 import SwiftData
 import SwiftUI
 
+// MARK: - MoodController
+// Classe pour la gestion des humeurs
+// Implémente ObservableObject pour la liaison avec SwiftUI
 class MoodController: ObservableObject {
     
     // MARK: - Context

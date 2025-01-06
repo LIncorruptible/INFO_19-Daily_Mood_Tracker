@@ -8,6 +8,8 @@
 import Foundation
 import SwiftData
 
+// MARK: - UserController
+// Classe pour la gestion des utilisateurs
 class UserController {
     
     // MARK: - Context

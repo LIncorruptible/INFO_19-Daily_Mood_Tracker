@@ -86,10 +86,10 @@ struct EditAccountView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("Nom d'utilisateur").font(.headline)) {
+            Section(header: Text("Nom d'utilisateur")) {
                 TextField("Entrez votre nom d'utilisateur", text: $username)
             }
-            Section(header: Text("Email").font(.headline)) {
+            Section(header: Text("Email")) {
                 TextField("Entrez votre email", text: $email)
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)

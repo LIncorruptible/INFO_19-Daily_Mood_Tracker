@@ -24,16 +24,19 @@ class UserSession: ObservableObject {
 
     @Environment(\.modelContext) private var context: ModelContext // Contexte SwiftData
 
+    // MARK: - init
     private init() {
         loadUserFromDefaults()
         isLoggedIn = currentUser != nil // Détermine si un utilisateur est connecté
     }
 
+    // MARK: - logout
     func login(user: User) {
         currentUser = user
         isLoggedIn = true
     }
 
+    // MARK: - logout
     func logout() {
         currentUser = nil
         isLoggedIn = false
@@ -41,6 +44,7 @@ class UserSession: ObservableObject {
         lastQuoteDateChanged = Date()
     }
 
+    // MARK: - updateQuote
     // Met à jour la citation du jour
     func updateQuote(quoteUUID: UUID) {
         currentQuoteUUID = quoteUUID
@@ -48,6 +52,7 @@ class UserSession: ObservableObject {
         saveUserToDefaults() // Sauvegarder après mise à jour
     }
 
+    // MARK: - saveUserToDefaults
     // Sauvegarder l'utilisateur et les informations sur la citation dans UserDefaults
     private func saveUserToDefaults() {
         guard let user = currentUser else {
@@ -70,6 +75,7 @@ class UserSession: ObservableObject {
         }
     }
 
+    // MARK: - loadUserFromDefaults
     // Charger l'utilisateur et les informations sur la citation depuis UserDefaults
     private func loadUserFromDefaults() {
         guard let data = UserDefaults.standard.data(forKey: "loggedInUser") else {

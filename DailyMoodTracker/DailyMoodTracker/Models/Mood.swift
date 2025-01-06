@@ -5,7 +5,6 @@
 //  Created by etudiant on 10/12/2024.
 //
 
-
 import Foundation
 import SwiftData
 
@@ -22,6 +21,7 @@ class Mood: Identifiable, Hashable {
     // Données binaires si l’utilisateur a importé une photo
     var userImageData: Data?
 
+    // MARK: - Constructeur par défaut
     init(
         id: UUID = UUID(),
         name: String,
@@ -38,10 +38,14 @@ class Mood: Identifiable, Hashable {
         self.userImageData = userImageData
     }
     
+    // MARK: - Hash
+    // Permet de comparer les instances de Mood
     static func == (lhs: Mood, rhs: Mood) -> Bool {
         return lhs.id == rhs.id
     }
     
+    // MARK: - Hashable
+    // Permet de hasher les instances de Mood
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
