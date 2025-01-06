@@ -11,7 +11,7 @@ import SwiftData
 struct JournalForm: View {
     @Environment(\.dismiss) private var dismiss
 
-    var mode: JournalFormMode
+    @Binding var mode: JournalFormMode
     @Binding var date: Date
     @Binding var notes: String
     @Binding var mood: Mood?
@@ -30,14 +30,14 @@ struct JournalForm: View {
     
     // Constructeur public
     public init(
-        mode: JournalFormMode,
+        mode: Binding<JournalFormMode>,
         date: Binding<Date>,
         notes: Binding<String>,
         mood: Binding<Mood?>,
         controller: MoodController,
         onSave: @escaping () -> Void
     ) {
-        self.mode = mode
+        self._mode = mode
         self._date = date
         self._notes = notes
         self._mood = mood
@@ -99,8 +99,8 @@ struct JournalForm: View {
     
     private var title: String {
         switch mode {
-        case .add: return "Nouveau journal"
-        case .edit: return "Modifier le journal"
+            case .add: return "Nouveau journal"
+            case .edit: return "Modifier le journal"
         }
     }
 
