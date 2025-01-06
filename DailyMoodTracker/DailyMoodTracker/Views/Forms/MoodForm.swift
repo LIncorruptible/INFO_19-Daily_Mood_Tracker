@@ -5,7 +5,6 @@
 //  Created by etudiant on 30/12/2024.
 //
 
-
 import SwiftUI
 import PhotosUI
 
@@ -17,18 +16,24 @@ struct MoodForm: View {
     @Binding var description: String
     @Binding var level: Int
     @Binding var selectedImageData: Data?
+    
+    // Picker iOS 16 pour sélectionner une image
     @State private var selectedItem: PhotosPickerItem? = nil
 
     // Gestion des erreurs
     @State private var nameError: String? = nil
     @State private var descriptionError: String? = nil
 
+    /// Action à exécuter lors de la sauvegarde (création ou édition)
     let onSave: () -> Void
 
     var body: some View {
         NavigationView {
             Form {
+                
+                // SECTION INFORMATIONS
                 Section("Informations") {
+                    // Nom de l'humeur
                     TextField("Nom de l'humeur", text: $name)
                         .onChange(of: name) { newValue in
                             if newValue.count > 20 {
@@ -44,6 +49,7 @@ struct MoodForm: View {
                             .foregroundColor(.red)
                     }
                     
+                    // Description
                     TextField("Description", text: $description)
                         .onChange(of: description) { newValue in
                             if newValue.count > 35 {
@@ -59,11 +65,14 @@ struct MoodForm: View {
                             .foregroundColor(.red)
                     }
                     
+                    // Niveau (Stepper)
                     Stepper(value: $level, in: 0...10) {
                         Text("Niveau : \(level)")
                     }
                 }
-                Section("Aperçu de l'image sélectionnée") {
+                
+                // SECTION PHOTO
+                Section("Photo") {
                     if let imageData = selectedImageData,
                        let uiImage = UIImage(data: imageData) {
                         Image(uiImage: uiImage)
@@ -74,6 +83,8 @@ struct MoodForm: View {
                         Text("Aucune photo sélectionnée.")
                             .foregroundColor(.secondary)
                     }
+                    
+                    // Bouton pour ouvrir le picker
                     PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
                         Text("Choisir une image")
                     }
@@ -89,7 +100,9 @@ struct MoodForm: View {
             .navigationTitle(title)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Annuler") { dismiss() }
+                    Button("Annuler") {
+                        dismiss()
+                    }
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Enregistrer") {
@@ -103,6 +116,7 @@ struct MoodForm: View {
         }
     }
 
+    /// Titre de la vue, en fonction du mode
     private var title: String {
         switch mode {
             case .add: return "Nouvelle humeur"
@@ -110,15 +124,20 @@ struct MoodForm: View {
         }
     }
 
+    /// Validation du formulaire avant sauvegarde
     private func validateForm() -> Bool {
+        // Vérifie que le nom n’est pas vide
         if name.trimmingCharacters(in: .whitespaces).isEmpty {
             nameError = "Le nom est obligatoire."
             return false
         }
+        
+        // Vérifie que le niveau soit >= 1 (selon ta logique)
         if level < 1 {
             nameError = "Le niveau doit être supérieur ou égal à 1."
             return false
         }
+        
         return true
     }
 }

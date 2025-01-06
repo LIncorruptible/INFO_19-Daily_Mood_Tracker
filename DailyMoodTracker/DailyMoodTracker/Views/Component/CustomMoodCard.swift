@@ -14,8 +14,16 @@ struct CustomMoodCard: View {
 
     var body: some View {
         HStack(spacing: 16) {
-            // Image de l'humeur
-            if let moodImage = mood.image {
+            // On vérifie d’abord userImageData
+            if let userImageData = mood.userImageData,
+               let uiImage = UIImage(data: userImageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
+
+            } else if let moodImage = mood.image,
+                      !moodImage.isEmpty {
                 Image(moodImage)
                     .resizable()
                     .scaledToFit()
@@ -28,7 +36,6 @@ struct CustomMoodCard: View {
                     .foregroundColor(.gray)
             }
 
-            // Détails de l'humeur
             VStack(alignment: .leading, spacing: 4) {
                 Text(mood.name)
                     .font(.headline)
