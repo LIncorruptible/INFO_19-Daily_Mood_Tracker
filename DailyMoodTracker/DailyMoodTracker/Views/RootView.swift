@@ -78,7 +78,7 @@ struct RootView: View {
         let moods = try moodController.getAll()
         if moods.isEmpty {
             try moodController.createMany(moods: DefaultMoods.all)
-            print("Hummeurs importées avec succès")
+            print("Humeurs importées avec succès")
         }
     }
 }

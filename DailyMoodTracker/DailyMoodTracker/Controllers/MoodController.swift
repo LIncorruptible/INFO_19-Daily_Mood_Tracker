@@ -27,13 +27,14 @@ class MoodController: ObservableObject {
         let fetchDescriptor = FetchDescriptor<Mood>()
         do {
             var moods = try context.fetch(fetchDescriptor)
+            // Si sans défaut, filtre les humeurs par défaut
             if withoutDefault {
+                print("Sans défaut")
                 moods = moods.filter { !isDefaultMood($0) }
-                
-                // Si un ID utilisateur est spécifié, filtre pour cet utilisateur
-                if let userId = userId {
-                    moods = moods.filter { $0.userId == userId }
-                }
+            }
+            // Si un ID utilisateur est spécifié, filtre pour cet utilisateur
+            if let userId = userId {
+                moods = moods.filter { $0.userId == userId || isDefaultMood($0) }
             }
             return moods
         } catch {
