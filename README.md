@@ -74,7 +74,7 @@ Ce projet a été réalisé par **Maël Rhuin** et **Adrien Chretien** dans le b
 ## 📦 Installation et Déploiement  
 1. Clonez ce repository via Git :  
    ```bash
-   git clone [https://github.com/LIncorruptible/INFO_19-Daily_Mood_Tracker.git](https://github.com/LIncorruptible/INFO_19-Daily_Mood_Tracker.git)
+   git clone https://github.com/LIncorruptible/INFO_19-Daily_Mood_Tracker.git
    ```
 2. Ouvrez le projet dans **Xcode**.  
 3. Configurez un simulateur ou un appareil iOS pour tester l’application.  
