@@ -60,8 +60,8 @@ struct AccountView: View {
     
     // MARK: - Déconnexion
     private func logout() {
-        print("Déconnexion effectuée")
-        // Implémentez la logique de déconnexion ici
+        // Déconnexion de l'utilisateur
+        userSession.logout()
     }
 }
 
