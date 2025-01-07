@@ -12,7 +12,7 @@ struct UserData: Codable {
     var username: String
     var email: String
     var password: String
-    var dateCreated: String // Modifié pour accepter une chaîne
+    var dateCreated: String
 }
 
 class UserImporter {
@@ -24,7 +24,7 @@ class UserImporter {
         let users = try! decoder.decode([UserData].self, from: data)
         
         var usersToReturn = [User]()
-        let dateFormatter = ISO8601DateFormatter() // Ajoute un formateur ISO 8601
+        let dateFormatter = ISO8601DateFormatter()
         
         for user in users {
             // Conversion de la date

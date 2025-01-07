@@ -8,7 +8,7 @@
 import SwiftUI
 
 // DefaultMoods.swift
-// Cette structure statique contient une liste prédéfinie de humeurs (moods) utilisées dans l'application DailyMoodTracker.
+// Cette structure statique contient une liste prédéfinie de humeurs (moods)
 struct DefaultMoods {
     static let all: [Mood] = [
         Mood(name: "Triste", text: "Humeur plutôt négative", level: 2, image: "mood_sad"),

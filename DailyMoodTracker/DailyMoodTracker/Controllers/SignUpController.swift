@@ -62,8 +62,6 @@ class SignUpController : UserController {
     }
 }
 
-// MARK: - SignUpError
-// Enum pour les erreurs d'inscription
 enum SignUpError: Error, LocalizedError {
     case emptyUsername
     case invalidEmail
@@ -73,11 +71,21 @@ enum SignUpError: Error, LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .emptyUsername: return "Le nom d'utilisateur est requis."
-        case .invalidEmail: return "L'adresse email n'est pas valide."
-        case .passwordMismatch: return "Les mots de passe ne correspondent pas."
-        case .weakPassword: return "Le mot de passe est trop faible."
-        case .emailAlreadyExists: return "Un compte avec cet email existe déjà."
+        case .emptyUsername:
+            return "Le nom d'utilisateur est requis."
+        case .invalidEmail:
+            // On peut préciser que le premier caractère doit être en minuscule
+            return "L'adresse email n'est pas valide ou ne commence pas par une minuscule."
+        case .passwordMismatch:
+            return "Les mots de passe ne correspondent pas."
+        case .weakPassword:
+            // On explique la règle en détail
+            return """
+            Le mot de passe doit comporter au minimum 8 caractères, \
+            incluant une majuscule, une minuscule et un chiffre.
+            """
+        case .emailAlreadyExists:
+            return "Un compte avec cet email existe déjà."
         }
     }
 }
@@ -102,14 +110,28 @@ enum EditAccountError: Error, LocalizedError {
 // Extensions pour les validations
 extension String {
     
+    /// Vérifie que l'email a une forme standard + commence obligatoirement par une minuscule ou un chiffre
     var isValidEmail: Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        // Ici, on impose :
+        // 1) Le premier caractère doit être a-z ou 0-9 (pas de majuscule)
+        // 2) Puis on autorise lettres maj/min, chiffres, ., _, %, +, -, ...
+        // 3) @
+        // 4) Domaine
+        // 5) TLD de 2 caractères minimum
+        let emailRegex = "^[a-z0-9][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
         return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: self)
     }
 
+    /// Vérifie que le mot de passe a au moins 8 caractères,
+    /// incluant minuscule, majuscule et chiffre
     var isStrongPassword: Bool {
-        // Minimum 8 caractères, au moins 1 majuscule, 1 minuscule, 1 chiffre
-        let passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d$@$!%*?&]{8,}"
+        // Regex :
+        // - au moins 8 caractères
+        // - au moins 1 majuscule
+        // - au moins 1 minuscule
+        // - au moins 1 chiffre
+        // - peut contenir caractères spéciaux autorisés
+        let passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d$@$!%*?&]{8,}$"
         return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: self)
     }
 
