@@ -19,6 +19,8 @@ struct JournalForm: View {
     
     @Environment(\.modelContext) private var context: ModelContext
     
+    @ObservedObject private var userSession = UserSession.shared
+    
     private var controller: MoodController
     @State private var moods: [Mood] = []
     
@@ -135,7 +137,11 @@ struct JournalForm: View {
     // MARK: - Chargement des humeurs
     private func fetchMoods() {
         do {
-            moods = try controller.getAll()
+            moods = try controller.getAll(withoutDefault: false, userId: userSession.currentUser?.id)
+            print("Humeurs chargées avec succès.")
+            for mood in moods {
+                print(mood.name)
+            }
         } catch {
             handleError(error)
         }
